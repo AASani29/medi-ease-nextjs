@@ -11,7 +11,7 @@ export default function Home() {
           <Image
             src='/MediEaseLogo.png'
             alt='MediEase Logo'
-            className='my-4'
+            className='my-2'
             width={200}
             height={100}
           />
@@ -45,8 +45,10 @@ export default function Home() {
         />
       </div>
       <div>
-        <h1 className='text-left text-3xl  px-4'>University Medical Centre</h1>
-        <p className='px-4'>
+        <h1 className='text-left text-3xl mb-4 px-4'>
+          University Medical Centre
+        </h1>
+        <p className='px-4 mb-6'>
           IUT has a Medical Center at the North- West corner of the campus. It
           has five well equipped observation beds, Mini operation Room, Medicine
           store, waiting area, and a pathological laboratory currently launched.
