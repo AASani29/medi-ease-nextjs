@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState, useTransition, useEffect } from "react"
 
 import { CardWrapper } from "./card-wrapper"
 
@@ -9,9 +9,17 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -34,8 +42,16 @@ export const RegisterForm = () => {
       name: "",
       email: "",
       password: "",
+      role: "null",
+      patientType: "null",
     },
   })
+
+  useEffect(() => {
+    if (form.watch("role") !== "PATIENT") {
+      form.setValue("patientType", "null")
+    }
+  }, [form.watch("role")])
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("")
@@ -52,7 +68,7 @@ export const RegisterForm = () => {
   return (
     <div>
       <CardWrapper
-        headerLabel='Create a new user'
+        headerLabel='Register a new user'
         backButtonHref='/auth/login'
         backButtonLabel='Sign in'
       >
@@ -113,6 +129,62 @@ export const RegisterForm = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name='role'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Role</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select user Role' />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value='PATIENT'>Patient</SelectItem>
+                          <SelectItem value='DOCTOR'>Doctor</SelectItem>
+                          <SelectItem value='ADMIN'>Admin</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage {...field} />
+                  </FormItem>
+                )}
+              />
+              {form.watch("role") === "PATIENT" && (
+                <FormField
+                  control={form.control}
+                  name='patientType'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Patient type</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder='Select patient type' />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value='STUDENT'>Student</SelectItem>
+                            <SelectItem value='FACULTY'>Faculty</SelectItem>
+                            <SelectItem value='STAFF'>Staff</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
             <FormError message={error} />
             <FormSuccess message={success} />

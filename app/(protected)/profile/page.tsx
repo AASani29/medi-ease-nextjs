@@ -8,13 +8,12 @@ const ProfilePage = async () => {
   if (!session) {
     redirect("/auth/login")
   }
-  console.log(session?.user?.name)
 
   return (
     <div>
-      <div className='text-2xl p-4'>{JSON.stringify(session)}</div>
+      <div className='text-xl p-4'>{JSON.stringify(session)}</div>
       <form
-        className='p-2'
+        className='px-4'
         action={async () => {
           "use server"
 
