@@ -8,6 +8,7 @@ const ProfilePage = async () => {
   if (!session) {
     redirect("/auth/login")
   }
+  console.log(session?.user?.name)
 
   return (
     <div>

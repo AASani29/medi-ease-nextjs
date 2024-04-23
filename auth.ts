@@ -6,6 +6,8 @@ import { db } from "./lib/db"
 import { LoginSchema } from "./schemas"
 import { getUserByEmail } from "./data/user"
 
+var bcrypt = require("bcryptjs")
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   adapter: PrismaAdapter(db),
@@ -17,13 +19,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (validatedFields.success) {
           const { email, password } = validatedFields.data
-          console.log(email, password)
 
           const user = await getUserByEmail(email)
-          console.log(user)
-
-          const passwordMatch = password == user?.password
-          console.log(passwordMatch)
+          const passwordMatch = bcrypt.compare(password, user?.password)
 
           if (passwordMatch) return user
         }
