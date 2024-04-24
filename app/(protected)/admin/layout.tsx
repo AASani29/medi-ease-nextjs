@@ -1,4 +1,6 @@
 import { auth, signOut } from "@/auth"
+import AdminSidebar from "@/components/admin/admin-sidebar"
+import SidebarProvider from "@/components/admin/provider/SidebarProvider"
 import { Button } from "@/components/ui/button"
 import { redirect } from "next/navigation"
 
@@ -33,7 +35,14 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className='h-full flex items-center justify-center'>{children}</div>
+    <>
+      <SidebarProvider>
+        <div className='flex'>
+          <AdminSidebar />
+          <div className='bg-gray-50 w-full'>{children}</div>
+        </div>
+      </SidebarProvider>
+    </>
   )
 }
 
