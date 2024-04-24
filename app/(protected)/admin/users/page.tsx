@@ -46,11 +46,13 @@ const UsersPage = async () => {
                 <TableCell>{user.role}</TableCell>
                 <TableCell>{user.patientType}</TableCell>
                 <TableCell>
-                  <FaEdit />
+                  <Link href='/admin/edit-user'>
+                    <FaEdit />
+                  </Link>
                 </TableCell>
                 {user?.role !== "ADMIN" && (
                   <TableCell>
-                    <FaTrash />
+                    <FaTrash className='cursor-pointer' />
                   </TableCell>
                 )}
               </TableRow>
