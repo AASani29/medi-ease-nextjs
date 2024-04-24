@@ -21,15 +21,29 @@ enum PatientType {
 }
 
 model User {
-  id          String       @id @default(cuid())
-  name        String?
-  email       String       @unique
-  password    String?
-  role        UserRole
-  patientType PatientType?
-  accounts    Account[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id                   String              @id @default(cuid())
+  name                 String?
+  email                String              @unique
+  password             String?
+  role                 UserRole
+  patientType          PatientType?
+  accounts             Account[]
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  PasswordResetToken   PasswordResetToken? @relation(fields: [passwordResetTokenId], references: [id])
+  passwordResetTokenId String?
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  userId    String?
+  User      User[]
+
+  @@unique([email, token])
 }
 
 model Account {
