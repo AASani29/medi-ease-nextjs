@@ -45,7 +45,7 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
       <SidebarProvider>
         <div className='flex'>
           <AdminSidebar />
-          <div className='bg-gray-50 w-screen'>{children}</div>
+          <div className='w-full'>{children}</div>
         </div>
       </SidebarProvider>
     </>

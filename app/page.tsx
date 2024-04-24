@@ -2,8 +2,22 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import LoginButton from "@/components/auth/login-button"
+import { auth } from "@/auth"
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth()
+
+  const userRole = session?.user?.role
+  let dashBoardUrl = ""
+
+  if (userRole === "ADMIN") {
+    dashBoardUrl = "/admin"
+  } else if (userRole === "DOCTOR") {
+    dashBoardUrl = "/doctor"
+  } else if (userRole === "PATIENT") {
+    dashBoardUrl = "/patient"
+  }
+
   return (
     <div className='p-2 px-4'>
       <nav className='border-b-2 border-gray-300'>
@@ -16,9 +30,15 @@ export default function Home() {
             height={100}
           />
           <div className='flex flex-col justify-end items-start'>
-            <LoginButton>
-              <Button variant='outline'>Login</Button>
-            </LoginButton>
+            {session ? (
+              <Link href={dashBoardUrl}>
+                <Button variant='outline'>Dashboard</Button>
+              </Link>
+            ) : (
+              <LoginButton>
+                <Button variant='outline'>Login</Button>
+              </LoginButton>
+            )}
           </div>
         </div>
         <h1 className='text-left text-xs mb-1 pl-10'>

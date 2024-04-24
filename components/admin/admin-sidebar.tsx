@@ -35,7 +35,7 @@ const AdminSidebar: React.FC = () => {
 
   return (
     <div
-      className={`flex h-screen relative gap-8 ${
+      className={`flex h-screen relative gap-8 border-r-2 border-gray-100 ${
         isCollapsed ? "w-20" : "w-64"
       }`}
     >
