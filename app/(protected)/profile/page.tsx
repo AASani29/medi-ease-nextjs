@@ -32,6 +32,18 @@ const ProfilePage = async () => {
             <Link href='/admin'>Admin Dashboard</Link>
           </Button>
         )}
+
+        {session?.user.role === "DOCTOR" && (
+          <Button variant='default'>
+            <Link href='/doctor'>Doctor Dashboard</Link>
+          </Button>
+        )}
+
+        {session?.user.role === "PATIENT" && (
+          <Button variant='default'>
+            <Link href='/patient'>Patient Dashboard</Link>
+          </Button>
+        )}
       </div>
     </div>
   )

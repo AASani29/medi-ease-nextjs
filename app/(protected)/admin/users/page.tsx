@@ -1,4 +1,4 @@
-import AdminNavbar from "@/components/admin/admin-navbar"
+import Navbar from "@/components/common/common-navbar"
 import { getAllUsers } from "@/data/user"
 
 const UsersPage = async () => {
@@ -6,7 +6,7 @@ const UsersPage = async () => {
 
   return (
     <div>
-      <AdminNavbar />
+      <Navbar />
       <div className='px-6'>
         <h1 className='text-2xl text-indigo-700 font-semibold py-3'>Users</h1>
         <ul className='border-indigo-700 p-2 rounded-md border-2'>

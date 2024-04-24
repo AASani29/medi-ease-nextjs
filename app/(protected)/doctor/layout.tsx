@@ -1,23 +1,22 @@
 import { auth, signOut } from "@/auth"
-import AdminSidebar from "@/components/admin/admin-sidebar"
-import SidebarProvider from "@/components/admin/provider/SidebarProvider"
+import Navbar from "@/components/common/common-navbar"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
-const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
+const DoctorLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth()
 
   if (!session) {
     redirect("/auth/login")
   }
 
-  if (session?.user.role !== "ADMIN") {
+  if (session?.user.role !== "DOCTOR") {
     return (
       <div className='min-h-screen flex flex-grow items-center justify-center bg-gray-100'>
         <div className='rounded-lg bg-white p-8 text-center shadow-2xl'>
           <h1 className='mb-4 text-4xl font-bold'>401</h1>
-          <p className='text-gray-600'>Not Authorized as Admin</p>
+          <p className='text-gray-600'>Not Authorized as Doctor</p>
           <div className='flex flex-col gap-1'>
             <form
               className='mt-4'
@@ -42,14 +41,10 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <SidebarProvider>
-        <div className='flex'>
-          <AdminSidebar />
-          <div className='bg-gray-50 w-screen'>{children}</div>
-        </div>
-      </SidebarProvider>
+      <Navbar />
+      <div className=''>{children}</div>
     </>
   )
 }
 
-export default AdminLayout
+export default DoctorLayout

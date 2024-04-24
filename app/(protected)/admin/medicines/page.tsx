@@ -1,9 +1,9 @@
-import AdminNavbar from "@/components/admin/admin-navbar"
+import Navbar from "@/components/common/common-navbar"
 
 const MedicinesPage = () => {
   return (
     <div>
-      <AdminNavbar />
+      <Navbar />
       ADMIN Medicines
     </div>
   )
