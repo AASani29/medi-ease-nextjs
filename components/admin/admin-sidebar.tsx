@@ -70,9 +70,9 @@ const AdminSidebar: React.FC = () => {
           {sidebarItems.map(({ name, href, icon: Icon }) => (
             <li key={name}>
               <Link
-                className={`text-sm text-black py-3 px-4 bg-gray-200 rounded-lg mb-4 flex items-center ${
+                className={`text-sm py-3 px-4 bg-gray-200 rounded-lg mb-4 flex items-center ${
                   pathname === href
-                    ? "bg-green-500 text-white"
+                    ? "bg-indigo-400 text-white"
                     : "hover:bg-gray-300"
                 } ${isCollapsed ? "justify-center" : ""}`}
                 href={href}
