@@ -15,6 +15,7 @@ import Navbar from "@/components/common/common-navbar"
 import { getAllUsers } from "@/data/user"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import DeleteUser from "@/components/admin/delete-user"
 
 const UsersPage = async () => {
   const users = await getAllUsers()
@@ -52,7 +53,9 @@ const UsersPage = async () => {
                 </TableCell>
                 {user?.role !== "ADMIN" && (
                   <TableCell>
-                    <FaTrash className='cursor-pointer' />
+                    <DeleteUser userId={user.id}>
+                      <FaTrash className='cursor-pointer' />
+                    </DeleteUser>
                   </TableCell>
                 )}
               </TableRow>
