@@ -4,6 +4,8 @@ import { useState } from "react"
 import { deleteUserAction } from "@/actions/delete-user"
 import { toast } from "sonner"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { Button } from "../ui/button"
+import { useRouter } from "next/navigation"
 
 interface DeleteUserProps {
   userId: string
@@ -11,6 +13,8 @@ interface DeleteUserProps {
 }
 
 const DeleteUser = ({ userId, children }: DeleteUserProps) => {
+  const router = useRouter()
+
   const [isDeleting, setIsDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -24,25 +28,37 @@ const DeleteUser = ({ userId, children }: DeleteUserProps) => {
       toast("User successfully deleted ✅", {
         description: "User have been removed from the database",
         action: {
-          label: "Done",
-          onClick: () => console.log("Done"),
+          label: "Reload",
+          onClick: () => {
+            router.refresh()
+          },
         },
       })
     } else {
-      setError(deleteError || "Failed to delete user")
+      toast("Failed to delete user ❌", {
+        description: "User could not be found in database",
+        action: {
+          label: "Reload",
+          onClick: () => {
+            router.refresh()
+          },
+        },
+      })
     }
 
     setIsDeleting(false)
   }
 
   return (
-    <button
-      className='cursor-pointer'
+    <Button
+      size='sm'
+      variant='outline'
+      className='cursor-pointer hover:text-gray-50 hover:bg-gray-800'
       onClick={handleDeleteUser}
       disabled={isDeleting}
     >
       {isDeleting ? <AiOutlineLoading3Quarters /> : children}
-    </button>
+    </Button>
   )
 }
 

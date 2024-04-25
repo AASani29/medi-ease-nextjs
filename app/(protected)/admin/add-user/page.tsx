@@ -199,7 +199,7 @@ const AddUserPage = () => {
               <Button
                 disabled={isPending}
                 type='submit'
-                className='w-full font-semibold'
+                className='w-full font-semibold shadow-md active:translate-y-[0.12rem] duration-300 hover:text-white hover:bg-gray-900'
                 variant='outline'
               >
                 Add User
@@ -209,7 +209,7 @@ const AddUserPage = () => {
         </CardContent>
         <CardFooter>
           <Button variant='link'>
-            <Link href='/admin/users'>Go back</Link>
+            <a href='/admin/users'>Go back</a>
           </Button>
         </CardFooter>
       </Card>

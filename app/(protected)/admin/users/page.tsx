@@ -47,9 +47,15 @@ const UsersPage = async () => {
                 <TableCell>{user.role}</TableCell>
                 <TableCell>{user.patientType}</TableCell>
                 <TableCell>
-                  <Link href={`/admin/edit-user/${user.id}`}>
-                    <FaEdit />
-                  </Link>
+                  <Button
+                    size='sm'
+                    variant='outline'
+                    className='hover:text-gray-50 hover:bg-gray-800'
+                  >
+                    <Link href={`/admin/edit-user/${user.id}`}>
+                      <FaEdit />
+                    </Link>
+                  </Button>
                 </TableCell>
                 {user?.role !== "ADMIN" && (
                   <TableCell>

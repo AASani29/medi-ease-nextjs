@@ -187,7 +187,7 @@ export const EditUser = ({ userData }: any) => {
         </CardContent>
         <CardFooter>
           <Button variant='link'>
-            <Link href='/admin/users'>Go back</Link>
+            <a href='/admin/users'>Go back</a>
           </Button>
         </CardFooter>
       </Card>
