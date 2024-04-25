@@ -50,7 +50,7 @@ const UsersPage = async () => {
                   <Button
                     size='sm'
                     variant='outline'
-                    className='hover:text-gray-50 hover:bg-gray-800'
+                    className='hover:text-gray-50 hover:bg-gray-800 shadow-md'
                   >
                     <Link href={`/admin/edit-user/${user.id}`}>
                       <FaEdit />

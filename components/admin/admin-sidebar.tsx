@@ -2,11 +2,14 @@
 
 import Image from "next/image"
 import Link from "next/link"
+
 import { BiSolidDashboard } from "react-icons/bi"
 import { FaUsers } from "react-icons/fa6"
 import { GiMedicinePills } from "react-icons/gi"
 import { MdKeyboardArrowRight } from "react-icons/md"
 import { MdKeyboardArrowLeft } from "react-icons/md"
+import { RiTestTubeFill } from "react-icons/ri"
+
 import React, { useContext } from "react"
 import SidebarContext from "./context/SidebarContext"
 import { usePathname } from "next/navigation"
@@ -26,6 +29,11 @@ const sidebarItems = [
     name: "Medicines",
     href: "/admin/medicines",
     icon: GiMedicinePills,
+  },
+  {
+    name: "Tests",
+    href: "/admin/tests",
+    icon: RiTestTubeFill,
   },
 ]
 
@@ -74,7 +82,7 @@ const AdminSidebar: React.FC = () => {
                 href={href}
               >
                 <span className='text-lg'>
-                  <Icon />
+                  <Icon size={19} />
                 </span>
                 <span
                   className={`ml-2 ${isCollapsed ? "hidden" : "inline-block"}`}

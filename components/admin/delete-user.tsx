@@ -53,7 +53,7 @@ const DeleteUser = ({ userId, children }: DeleteUserProps) => {
     <Button
       size='sm'
       variant='outline'
-      className='cursor-pointer hover:text-gray-50 hover:bg-gray-800'
+      className='cursor-pointer hover:text-gray-50 hover:bg-gray-800 shadow-md'
       onClick={handleDeleteUser}
       disabled={isDeleting}
     >
