@@ -1,11 +1,14 @@
-import { signOut } from "@/auth"
+import { auth, signOut } from "@/auth"
 import { Button } from "../ui/button"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 import Image from "next/image"
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth()
+  console.log(session)
+
   return (
     <nav className='flex justify-between px-5 py-1 items-center shadow-md bg-white'>
       <Link href='/'>
