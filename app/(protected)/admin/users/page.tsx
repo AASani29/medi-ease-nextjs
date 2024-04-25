@@ -46,7 +46,7 @@ const UsersPage = async () => {
                 <TableCell>{user.role}</TableCell>
                 <TableCell>{user.patientType}</TableCell>
                 <TableCell>
-                  <Link href='/admin/edit-user'>
+                  <Link href={`/admin/edit-user/${user.id}`}>
                     <FaEdit />
                   </Link>
                 </TableCell>

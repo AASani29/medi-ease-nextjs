@@ -37,30 +37,15 @@ import { FormSuccess } from "@/components/form-success"
 
 import { update } from "@/actions/update"
 import Link from "next/link"
-import { PatientType, UserRole } from "@prisma/client"
 
-interface userProps {
-  name: string
-  email: string
-  password: string
-  role: UserRole
-  patientType: PatientType
-}
-
-export const EditUser = () => {
+export const EditUser = ({ userData }: any) => {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
-    defaultValues: {
-      name: "user.name",
-      email: "user.email",
-      password: "user.password",
-      role: "null",
-      patientType: "null",
-    },
+    defaultValues: userData,
   })
 
   useEffect(() => {
@@ -123,24 +108,6 @@ export const EditUser = () => {
                           id='email'
                           type='email'
                           placeholder='Email'
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage {...field} />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='password'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          id='password'
-                          type='password'
-                          placeholder='&#9679;&#9679;&#9679;&#9679;&#9679;'
                           disabled={isPending}
                         />
                       </FormControl>

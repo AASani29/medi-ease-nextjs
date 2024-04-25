@@ -15,26 +15,28 @@ export const update = async (values: z.infer<typeof RegisterSchema>) => {
     return { Error: "Invalid fields" }
   }
 
-  const { name, email, password, role, patientType } = validatedFields.data
+  const { name, email, role, patientType } = validatedFields.data
 
-  var hashedPassword = bcrypt.hashSync(password, salt)
+  try {
+    const existingUser = await getUserByEmail(email)
 
-  const existingUser = await getUserByEmail(email)
+    if (!existingUser) {
+      return { Error: "User not found" }
+    }
 
-  if (existingUser) {
-    return { Error: "Email already exists" }
+    await db.user.update({
+      where: { email },
+      data: {
+        name,
+        email,
+        role,
+        patientType,
+      },
+    })
+
+    return { Success: "User updated successfully" }
+  } catch (error) {
+    console.error("Error updating user:", error)
+    return { Error: "Failed to update user" }
   }
-
-  await db.user.update({
-    where: { email },
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-      role,
-      patientType,
-    },
-  })
-
-  return { Success: "User updated" }
 }

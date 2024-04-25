@@ -8,12 +8,14 @@ import Image from "next/image"
 const Navbar = () => {
   return (
     <nav className='flex justify-between px-5 py-1 items-center shadow-md bg-white'>
-      <Image
-        src='/MediEaseLogo.png'
-        alt='MediEase Logo'
-        width={140}
-        height={100}
-      />
+      <Link href='/'>
+        <Image
+          src='/MediEaseLogo.png'
+          alt='MediEase Logo'
+          width={140}
+          height={100}
+        />
+      </Link>
       <div className='flex gap-1 items-center'>
         <form
           className='px-4'
