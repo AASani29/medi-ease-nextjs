@@ -3,13 +3,15 @@
 import { RegisterSchema } from "@/schemas"
 import * as z from "zod"
 import { db } from "@/lib/db"
-import { getUserByEmail } from "@/data/user"
+import { getUserById } from "@/data/user"
 
-var bcrypt = require("bcryptjs")
-var salt = bcrypt.genSaltSync(10)
-
-export const update = async (values: z.infer<typeof RegisterSchema>) => {
-  const validatedFields = RegisterSchema.safeParse(values)
+export const update = async (
+  id: string,
+  values: z.infer<typeof RegisterSchema>
+) => {
+  const validatedFields = RegisterSchema.omit({
+    password: true,
+  }).safeParse(values)
 
   if (!validatedFields.success) {
     return { Error: "Invalid fields" }
@@ -18,14 +20,14 @@ export const update = async (values: z.infer<typeof RegisterSchema>) => {
   const { name, email, role, patientType } = validatedFields.data
 
   try {
-    const existingUser = await getUserByEmail(email)
+    const existingUser = await getUserById(id)
 
     if (!existingUser) {
       return { Error: "User not found" }
     }
 
     await db.user.update({
-      where: { email },
+      where: { id },
       data: {
         name,
         email,

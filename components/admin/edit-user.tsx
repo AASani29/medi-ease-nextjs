@@ -59,7 +59,7 @@ export const EditUser = ({ userData }: any) => {
     setSuccess("")
 
     startTransition(() => {
-      update(values).then((data) => {
+      update(userData.id, values).then((data) => {
         setError(data.Error)
         setSuccess(data.Success)
       })
