@@ -66,3 +66,16 @@ model Account {
 
   @@id([provider, providerAccountId])
 }
+
+model Test {
+  id       String  @id @default(cuid())
+  testName String  @unique
+  details  String?
+}
+
+model Medicine {
+  id           String  @id @default(cuid())
+  medicineName String  @unique
+  manufacturer String?
+  description  String?
+}

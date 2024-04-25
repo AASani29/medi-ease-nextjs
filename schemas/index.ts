@@ -16,3 +16,14 @@ export const RegisterSchema = z.object({
   role: z.enum(["PATIENT", "DOCTOR", "ADMIN", "null"]),
   patientType: z.enum(["STUDENT", "FACULTY", "STAFF", "null"]),
 })
+
+export const MedicineSchema = z.object({
+  medicineName: z.string().min(1, { message: "Medicine name is required" }),
+  manufacturer: z.string().min(1, { message: "Manufacturer is required" }),
+  description: z.string().min(1, { message: "Description is required" }),
+})
+
+export const TestSchema = z.object({
+  testName: z.string().min(1, { message: "Test name is required" }),
+  details: z.string().min(1, { message: "Destails is required" }),
+})

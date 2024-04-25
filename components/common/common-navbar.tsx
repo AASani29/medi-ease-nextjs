@@ -31,8 +31,8 @@ const Navbar = () => {
         </form>
         <Link href='/profile'>
           <Avatar>
-            <AvatarImage src='https://github.com/shadcn.png' />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src='#' />
+            <AvatarFallback>DP</AvatarFallback>
           </Avatar>
         </Link>
       </div>

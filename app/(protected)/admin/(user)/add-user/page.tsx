@@ -36,7 +36,6 @@ import { FormError } from "@/components/form-error"
 import { FormSuccess } from "@/components/form-success"
 
 import { register } from "@/actions/register"
-import Link from "next/link"
 
 const AddUserPage = () => {
   const [isPending, startTransition] = useTransition()
@@ -70,6 +69,8 @@ const AddUserPage = () => {
         setSuccess(data.Success)
       })
     })
+
+    form.reset()
   }
 
   return (
