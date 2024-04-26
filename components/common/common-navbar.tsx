@@ -7,10 +7,19 @@ import Image from "next/image"
 
 const Navbar = async () => {
   const session = await auth()
-  console.log(session)
+
+  let pfpBorder = ""
+
+  if (session?.user?.role === "PATIENT") {
+    pfpBorder = "border-blue-500"
+  } else if (session?.user?.role === "DOCTOR") {
+    pfpBorder = "border-green-500"
+  } else if (session?.user?.role === "ADMIN") {
+    pfpBorder = "border-pink-500"
+  }
 
   return (
-    <nav className='flex justify-between px-5 py-1 items-center shadow-md bg-white'>
+    <nav className='flex justify-between px-5 py-2 items-center shadow-md bg-white border-b-2'>
       <Link href='/'>
         <Image
           src='/MediEaseLogo.png'
@@ -32,7 +41,7 @@ const Navbar = async () => {
             Sign Out
           </Button>
         </form>
-        <Link href='/profile'>
+        <Link href='/profile' className={`${pfpBorder} border-4 rounded-full`}>
           <Avatar>
             <AvatarImage src='#' />
             <AvatarFallback>DP</AvatarFallback>
