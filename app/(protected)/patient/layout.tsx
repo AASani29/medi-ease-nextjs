@@ -1,5 +1,6 @@
 import { auth, signOut } from "@/auth"
 import Navbar from "@/components/common/common-navbar"
+import { PatientNavbar } from "@/components/patient/patient-navbar"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -42,6 +43,7 @@ const PatientLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
+      <PatientNavbar />
       <div className=''>{children}</div>
     </>
   )
