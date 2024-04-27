@@ -66,9 +66,9 @@ const ProfilePage = async () => {
 
         <div className='flex gap-2 justify-center items-center'>
           {session?.user.role === "ADMIN" && (
-            <Button variant='default'>
-              <Link href='/admin'>Admin Dashboard</Link>
-            </Button>
+            <Link href='/admin'>
+              <Button variant='default'>Admin Dashboard</Button>
+            </Link>
           )}
 
           {session?.user.role === "DOCTOR" && (

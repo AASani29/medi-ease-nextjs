@@ -22,7 +22,7 @@ enum PatientType {
 
 model User {
   id                   String              @id @default(cuid())
-  name                 String?
+  name                 String
   email                String              @unique
   password             String?
   role                 UserRole
@@ -32,6 +32,54 @@ model User {
   updatedAt            DateTime            @updatedAt
   PasswordResetToken   PasswordResetToken? @relation(fields: [passwordResetTokenId], references: [id])
   passwordResetTokenId String?
+
+  patient Patient?
+}
+
+model Patient {
+  id         String      @id @default(cuid())
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
+  dob        DateTime?
+  gender     String      @db.Char(5)
+  phone      String?     @db.VarChar(25)
+  bloodGroup String?     @db.VarChar(10)
+  address    String?     @db.Text
+  type       PatientType
+
+  studentInfo StudentInfo?
+  facultyInfo FacultyInfo?
+  staffInfo   StaffInfo?
+
+  @@unique([userId])
+}
+
+model StudentInfo {
+  id              String  @id @default(cuid())
+  patientId       String  @unique
+  patient         Patient @relation(fields: [patientId], references: [id])
+  currentSemester Int?
+  department      String? @db.VarChar(50)
+  program         String? @db.VarChar(50)
+  originCountry   String? @db.VarChar(50)
+}
+
+model FacultyInfo {
+  id         String    @id @default(cuid())
+  patientId  String    @unique
+  patient    Patient   @relation(fields: [patientId], references: [id])
+  department String?   @db.VarChar(50)
+  position   String?   @db.VarChar(50)
+  hireDate   DateTime?
+}
+
+model StaffInfo {
+  id         String    @id @default(cuid())
+  patientId  String    @unique
+  patient    Patient   @relation(fields: [patientId], references: [id])
+  department String?   @db.VarChar(50)
+  position   String?   @db.VarChar(50)
+  hireDate   DateTime?
 }
 
 model PasswordResetToken {
