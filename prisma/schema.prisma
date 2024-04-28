@@ -37,15 +37,14 @@ model User {
 }
 
 model Patient {
-  id         String      @id @default(cuid())
+  id         String    @id @default(cuid())
   userId     String
-  user       User        @relation(fields: [userId], references: [id])
+  user       User      @relation(fields: [userId], references: [id])
   dob        DateTime?
-  gender     String      @db.Char(5)
-  phone      String?     @db.VarChar(25)
-  bloodGroup String?     @db.VarChar(10)
-  address    String?     @db.Text
-  type       PatientType
+  gender     String?   @db.Char(5)
+  phone      String?   @db.VarChar(25)
+  bloodGroup String?   @db.VarChar(10)
+  address    String?   @db.Text
 
   studentInfo StudentInfo?
   facultyInfo FacultyInfo?

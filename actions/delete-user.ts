@@ -1,20 +1,28 @@
 "use server"
-
 import { db } from "@/lib/db"
-// import { redirect } from "next/navigation"
-// import { revalidatePath } from "next/cache"
 
 export const deleteUserAction = async (userId: string) => {
   try {
+    // Get the user record
+    const user = await db.user.findUnique({
+      where: { id: userId },
+      include: { patient: true },
+    })
+
+    // Check if the user has a patient record
+    if (user?.role === "PATIENT" && user.patient) {
+      // Delete the patient record
+      await db.patient.delete({
+        where: { id: user.patient.id },
+      })
+    }
+
+    // Delete the user record
     await db.user.delete({
-      where: {
-        id: userId,
-      },
+      where: { id: userId },
     })
 
     return { success: true }
-    // revalidatePath("/admin/users")
-    // redirect("/admin/users")
   } catch (error) {
     console.error("Error deleting user:", error)
     return { success: false, error: "Failed to delete user" }

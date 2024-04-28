@@ -75,7 +75,7 @@ const AddUserPage = () => {
 
   return (
     <div className='py-8 px-12'>
-      <Card>
+      <Card className='shadow-lg bg-slate-50'>
         <CardHeader>
           <CardTitle>Add User</CardTitle>
           <CardDescription>Fill the form to add a new user</CardDescription>
