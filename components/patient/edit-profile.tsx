@@ -1,4 +1,14 @@
-import { Button } from "@/components/ui/button"
+"use client"
+
+import { useState, useTransition } from "react"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { cn } from "@/lib/utils"
+
+import { Calendar } from "@/components/ui/calendar"
+import { format } from "date-fns"
+import { CalendarIcon } from "@radix-ui/react-icons"
 import {
   Card,
   CardContent,
@@ -7,66 +17,312 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-const EditProfile = () => {
+import { Button } from "@/components/ui/button"
+import { FormError } from "@/components/form-error"
+import { FormSuccess } from "@/components/form-success"
+import {
+  StudentPatientSchema,
+  FacultyPatientSchema,
+  StaffPatientSchema,
+} from "../../schemas/index"
+
+const EditProfile = ({ user, patient, info }: any) => {
+  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | undefined>("")
+  const [success, setSuccess] = useState<string | undefined>("")
+
+  const patientType = user.patientType
+
+  const studentForm = useForm<z.infer<typeof StudentPatientSchema>>({
+    resolver: zodResolver(StudentPatientSchema),
+    defaultValues: {
+      ...user,
+      ...patient,
+      ...info,
+      patientType: patientType,
+    },
+  })
+
+  const facultyForm = useForm<z.infer<typeof FacultyPatientSchema>>({
+    resolver: zodResolver(FacultyPatientSchema),
+    defaultValues: {
+      ...user,
+      ...patient,
+      ...info,
+      patientType: patientType,
+    },
+  })
+
+  const staffForm = useForm<z.infer<typeof StaffPatientSchema>>({
+    resolver: zodResolver(StaffPatientSchema),
+    defaultValues: {
+      ...user,
+      ...patient,
+      ...info,
+      patientType: patientType,
+    },
+  })
+
+  const onSubmit = (values: any) => {
+    console.log(values)
+  }
+
   return (
-    <Tabs defaultValue='account' className='w-[400px] shadow-xl'>
-      <TabsList className='grid w-full grid-cols-2'>
-        <TabsTrigger value='account'>Account</TabsTrigger>
-        <TabsTrigger value='password'>Password</TabsTrigger>
-      </TabsList>
-      <TabsContent value='account'>
-        <Card>
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>
-              Make changes to your account here. Click save when you&apos;re
-              done.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className='space-y-2'>
-            <div className='space-y-1'>
-              <Label htmlFor='name'>Name</Label>
-              <Input id='name' defaultValue='Pedro Duarte' />
-            </div>
-            <div className='space-y-1'>
-              <Label htmlFor='username'>Username</Label>
-              <Input id='username' defaultValue='@peduarte' />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
-        </Card>
-      </TabsContent>
-      <TabsContent value='password'>
-        <Card>
-          <CardHeader>
-            <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you&apos;ll be logged
-              out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className='space-y-2'>
-            <div className='space-y-1'>
-              <Label htmlFor='current'>Current password</Label>
-              <Input id='current' type='password' />
-            </div>
-            <div className='space-y-1'>
-              <Label htmlFor='new'>New password</Label>
-              <Input id='new' type='password' />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save password</Button>
-          </CardFooter>
-        </Card>
-      </TabsContent>
-    </Tabs>
+    <div className='w-full px-24'>
+      <Card className='shadow-xl'>
+        <CardHeader>
+          <CardTitle>Update Profile</CardTitle>
+          <CardDescription>
+            Update your profile information here.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...studentForm}>
+            <form
+              onSubmit={studentForm.handleSubmit(onSubmit)}
+              className='space-y-8'
+            >
+              <div className='space-y-3'>
+                <FormLabel>Patient Information</FormLabel>
+                <FormField
+                  control={studentForm.control}
+                  name='dob'
+                  render={({ field }) => (
+                    <FormItem className='flex flex-col'>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-[20rem] pl-3 text-center font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Date of Birth</span>
+                              )}
+                              <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-auto p-0' align='start'>
+                          <Calendar
+                            mode='single'
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={studentForm.control}
+                  name='gender'
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select gender' />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value='male'>Male</SelectItem>
+                          <SelectItem value='female'>Female</SelectItem>
+                          <SelectItem value='nonbinary'>Non-Binary</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={studentForm.control}
+                  name='phone'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='phone'
+                          type='text'
+                          placeholder='Phone Number'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={studentForm.control}
+                  name='bloodGroup'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='bloodGroup'
+                          type='text'
+                          placeholder='Blood Group'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={studentForm.control}
+                  name='address'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='address'
+                          type='text'
+                          placeholder='Address'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={studentForm.control}
+                  name='currentSemester'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='currentSemester'
+                          type='text'
+                          placeholder='Current Semester'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={studentForm.control}
+                  name='department'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='department'
+                          type='text'
+                          placeholder='Department'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={studentForm.control}
+                  name='program'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='program'
+                          type='text'
+                          placeholder='Program'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={studentForm.control}
+                  name='originCountry'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='originCountry'
+                          type='text'
+                          placeholder='Origin Country'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormError message={error} />
+              <FormSuccess message={success} />
+
+              <Button
+                disabled={isPending}
+                type='submit'
+                className='w-full font-semibold hover:bg-gray-800 hover:text-white'
+                variant='outline'
+              >
+                Update Profile
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          <Button variant='link'>
+            <a href='/profile'>Go to Profile &rarr;</a>
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
   )
 }
 

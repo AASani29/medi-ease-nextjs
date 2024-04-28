@@ -57,7 +57,7 @@ model StudentInfo {
   id              String  @id @default(cuid())
   patientId       String  @unique
   patient         Patient @relation(fields: [patientId], references: [id])
-  currentSemester Int?
+  currentSemester String?
   department      String? @db.VarChar(50)
   program         String? @db.VarChar(50)
   originCountry   String? @db.VarChar(50)

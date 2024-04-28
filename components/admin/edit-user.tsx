@@ -36,7 +36,6 @@ import { FormError } from "@/components/form-error"
 import { FormSuccess } from "@/components/form-success"
 
 import { update } from "@/actions/update"
-import Link from "next/link"
 
 export const EditUser = ({ userData }: any) => {
   const [isPending, startTransition] = useTransition()

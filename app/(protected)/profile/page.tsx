@@ -135,7 +135,7 @@ const ProfilePage = async () => {
             )}
 
             {session?.user.role === "PATIENT" && (
-              <Link href='/profile/edit-profile'>
+              <Link href={`/profile/edit-profile/${session.user.id}`}>
                 <Button variant='outline'>Edit Profile</Button>
               </Link>
             )}
@@ -164,57 +164,79 @@ const ProfilePage = async () => {
                   <div className='space-y-1'>
                     {session.user.name && (
                       <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                        {session.user.name}
+                        <strong>Name :</strong>{" "}
+                        <span className='text-blue-600'>
+                          {session.user.name}
+                        </span>
                       </p>
                     )}
                   </div>
                   <div className='space-y-1'>
                     {session.user.email && (
                       <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                        {session.user.email}
+                        <strong>Email :</strong>{" "}
+                        <span className='text-blue-600'>
+                          {session.user.email}
+                        </span>
                       </p>
                     )}
                   </div>
                   <div className='space-y-1'>
                     <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                      {patientInfo?.dob
-                        ? patientInfo.dob.toString()
-                        : "Add your Date of Birth"}
+                      <strong>Date of birth :</strong>{" "}
+                      <span className='text-blue-600'>
+                        {patientInfo?.dob
+                          ? new Date(patientInfo.dob).toLocaleDateString(
+                              "en-GB"
+                            )
+                          : "Add your Date of Birth"}
+                      </span>
                     </p>
                   </div>
                   <div className='space-y-1'>
                     <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                      {patientInfo?.gender
-                        ? patientInfo.gender
-                        : "Add your Gender"}
+                      <strong>Gender :</strong>{" "}
+                      <span className='text-blue-600'>
+                        {patientInfo?.gender
+                          ? patientInfo.gender
+                          : "Add your Gender"}
+                      </span>
                     </p>
                   </div>
                   <div className='space-y-1'>
                     <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                      {patientInfo?.phone
-                        ? patientInfo.phone
-                        : "Add your phone number"}
+                      <strong>Phone Number :</strong>{" "}
+                      <span className='text-blue-600'>
+                        {patientInfo?.phone
+                          ? patientInfo.phone
+                          : "Add your phone number"}
+                      </span>
                     </p>
                   </div>
                   <div className='space-y-1'>
                     <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                      {patientInfo?.bloodGroup
-                        ? patientInfo.bloodGroup
-                        : "Add your blood group"}
+                      <strong>Blood Group :</strong>{" "}
+                      <span className='text-blue-600'>
+                        {patientInfo?.bloodGroup
+                          ? patientInfo.bloodGroup
+                          : "Add your blood group"}
+                      </span>
                     </p>
                   </div>
                   <div className='space-y-1'>
                     <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                      {patientInfo?.address
-                        ? patientInfo.address
-                        : "Add your address"}
+                      <strong>Address :</strong>{" "}
+                      <span className='text-blue-600'>
+                        {patientInfo?.address
+                          ? patientInfo.address
+                          : "Add your address"}
+                      </span>
                     </p>
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <p className='text-sm'>
-                    <strong>Role:</strong>{" "}
-                    <span className='text-blue-600'>{session.user.role}</span>
+                  <p className='text-sm text-gray-600'>
+                    Personal information may change with time.
                   </p>
                 </CardFooter>
               </Card>
@@ -233,7 +255,7 @@ const ProfilePage = async () => {
                       {session.user.patientType === "STUDENT" &&
                       studedntInfo ? (
                         <>
-                          <strong>Department:</strong>{" "}
+                          <strong>Department :</strong>{" "}
                           <span className='text-blue-600'>
                             {studedntInfo.department}
                           </span>
@@ -241,14 +263,14 @@ const ProfilePage = async () => {
                       ) : session.user.patientType === "FACULTY" &&
                         facultyInfo ? (
                         <>
-                          <strong>Department:</strong>{" "}
+                          <strong>Department :</strong>{" "}
                           <span className='text-blue-600'>
                             {facultyInfo.department}
                           </span>
                         </>
                       ) : session.user.patientType === "STAFF" && staffInfo ? (
                         <>
-                          <strong>Department:</strong>{" "}
+                          <strong>Department :</strong>{" "}
                           <span className='text-blue-600'>
                             {staffInfo.department}
                           </span>
@@ -263,7 +285,7 @@ const ProfilePage = async () => {
                       <p className='border-2 py-1 px-2 text-sm rounded-md'>
                         {studedntInfo ? (
                           <>
-                            <strong>Program:</strong>{" "}
+                            <strong>Program :</strong>{" "}
                             <span className='text-blue-600'>
                               {studedntInfo.program}
                             </span>
@@ -279,7 +301,7 @@ const ProfilePage = async () => {
                       {session.user.patientType === "STUDENT" &&
                       studedntInfo ? (
                         <>
-                          <strong>Current Semester:</strong>{" "}
+                          <strong>Current Semester :</strong>{" "}
                           <span className='text-blue-600'>
                             {studedntInfo.currentSemester}
                           </span>
@@ -313,7 +335,7 @@ const ProfilePage = async () => {
                       {session.user.patientType === "STUDENT" &&
                       studedntInfo ? (
                         <>
-                          <strong>Origin Country:</strong>{" "}
+                          <strong>Origin Country :</strong>{" "}
                           <span className='text-blue-600'>
                             {studedntInfo.originCountry}
                           </span>
@@ -325,7 +347,9 @@ const ProfilePage = async () => {
                         <>
                           <strong>Joining :</strong>{" "}
                           <span className='text-blue-600'>
-                            {facultyInfo.hireDate?.toString()}
+                            {new Date(facultyInfo.hireDate).toLocaleDateString(
+                              "en-GB"
+                            )}
                           </span>
                         </>
                       ) : session.user.patientType === "FACULTY" ? (
@@ -334,7 +358,9 @@ const ProfilePage = async () => {
                         <>
                           <strong>Joining :</strong>{" "}
                           <span className='text-blue-600'>
-                            {staffInfo.hireDate?.toString()}
+                            {new Date(staffInfo.hireDate).toLocaleDateString(
+                              "en-GB"
+                            )}
                           </span>
                         </>
                       ) : session.user.patientType === "STAFF" ? (

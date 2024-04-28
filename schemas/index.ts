@@ -84,6 +84,10 @@ export const StaffInfoSchema = z.object({
   hireDate: z.date().optional().nullish(),
 })
 
+export const StudentPatientSchema = z.union([PatientSchema, StudentInfoSchema])
+export const FacultyPatientSchema = z.union([PatientSchema, FacultyInfoSchema])
+export const StaffPatientSchema = z.union([PatientSchema, StaffInfoSchema])
+
 export const MedicineSchema = z.object({
   medicineName: z.string().min(1, { message: "Medicine name is required" }),
   manufacturer: z.string().min(1, { message: "Manufacturer is required" }),
