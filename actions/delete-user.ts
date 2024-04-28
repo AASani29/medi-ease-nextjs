@@ -1,16 +1,48 @@
 "use server"
+
 import { db } from "@/lib/db"
 
 export const deleteUserAction = async (userId: string) => {
   try {
-    // Get the user record
     const user = await db.user.findUnique({
       where: { id: userId },
-      include: { patient: true },
+      include: {
+        patient: {
+          include: {
+            studentInfo: true,
+            facultyInfo: true,
+            staffInfo: true,
+          },
+        },
+      },
     })
 
-    // Check if the user has a patient record
-    if (user?.role === "PATIENT" && user.patient) {
+    if (!user) {
+      return { success: false, error: "User not found" }
+    }
+
+    // Delete patientInfo based on patientType
+    if (user.patient) {
+      switch (user.patientType) {
+        case "STUDENT":
+          await db.studentInfo.delete({
+            where: { id: user.patient.studentInfo.id },
+          })
+          break
+        case "FACULTY":
+          await db.facultyInfo.delete({
+            where: { id: user.patient.facultyInfo.id },
+          })
+          break
+        case "STAFF":
+          await db.staffInfo.delete({
+            where: { id: user.patient.staffInfo.id },
+          })
+          break
+        default:
+          break
+      }
+
       // Delete the patient record
       await db.patient.delete({
         where: { id: user.patient.id },

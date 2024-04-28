@@ -1,4 +1,5 @@
 "use server"
+
 import { RegisterSchema } from "@/schemas"
 import * as z from "zod"
 import { db } from "@/lib/db"
@@ -19,32 +20,64 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { Error: "Email already exists" }
   }
 
-  if (role === "PATIENT") {
-    const newUser = await db.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role,
-        patientType,
-        patient: {
-          create: {},
-        },
+  const newUser = await db.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role,
+      patientType,
+      patient: {
+        create: {},
       },
-    })
+    },
+    select: {
+      id: true,
+      patient: true,
+    },
+  })
 
-    return { Success: "User registered" }
-  } else {
-    const newUser = await db.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role,
-        patientType,
-      },
-    })
+  console.log(newUser)
 
-    return { Success: "User registered" }
+  if (newUser.patient) {
+    switch (patientType) {
+      case "STUDENT":
+        await db.studentInfo.create({
+          data: {
+            patient: {
+              connect: {
+                id: newUser.patient.id,
+              },
+            },
+          },
+        })
+        break
+      case "FACULTY":
+        await db.facultyInfo.create({
+          data: {
+            patient: {
+              connect: {
+                id: newUser.patient.id,
+              },
+            },
+          },
+        })
+        break
+      case "STAFF":
+        await db.staffInfo.create({
+          data: {
+            patient: {
+              connect: {
+                id: newUser.patient.id,
+              },
+            },
+          },
+        })
+        break
+      default:
+        break
+    }
   }
+
+  return { Success: "User registered" }
 }

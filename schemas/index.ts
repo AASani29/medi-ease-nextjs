@@ -18,11 +18,70 @@ export const RegisterSchema = z.object({
 })
 
 export const PatientSchema = z.object({
-  dob: z.string().min(1, { message: "Date of birth is required" }),
-  gender: z.string().min(1, { message: "Gender is required" }),
-  phone: z.string().min(1, { message: "Phone number is required" }),
-  bloodGroup: z.string().min(1, { message: "Blood Group is required" }),
-  address: z.string().min(1, { message: "Address is required" }),
+  dob: z.date().optional().nullish(),
+  gender: z
+    .string()
+    .max(5, { message: "Gender must be at most 5 characters" })
+    .optional()
+    .nullish(),
+  phone: z
+    .string()
+    .max(25, { message: "Phone number must be at most 25 characters" })
+    .optional()
+    .nullish(),
+  bloodGroup: z
+    .string()
+    .max(10, { message: "Blood Group must be at most 10 characters" })
+    .optional()
+    .nullish(),
+  address: z.string().optional().nullish(),
+})
+
+export const StudentInfoSchema = z.object({
+  currentSemester: z.number().int().optional().nullish(),
+  department: z
+    .string()
+    .max(50, { message: "Department must be at most 50 characters" })
+    .optional()
+    .nullish(),
+  program: z
+    .string()
+    .max(50, { message: "Program must be at most 50 characters" })
+    .optional()
+    .nullish(),
+  originCountry: z
+    .string()
+    .max(50, { message: "Origin Country must be at most 50 characters" })
+    .optional()
+    .nullish(),
+})
+
+export const FacultyInfoSchema = z.object({
+  department: z
+    .string()
+    .max(50, { message: "Department must be at most 50 characters" })
+    .optional()
+    .nullish(),
+  position: z
+    .string()
+    .max(50, { message: "Position must be at most 50 characters" })
+    .optional()
+    .nullish(),
+  hireDate: z.date().optional().nullish(),
+})
+
+export const StaffInfoSchema = z.object({
+  department: z
+    .string()
+    .max(50, { message: "Department must be at most 50 characters" })
+    .optional()
+    .nullish(),
+  position: z
+    .string()
+    .max(50, { message: "Position must be at most 50 characters" })
+    .optional()
+    .nullish(),
+  hireDate: z.date().optional().nullish(),
 })
 
 export const MedicineSchema = z.object({
