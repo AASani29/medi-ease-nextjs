@@ -1,48 +1,86 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 const DoctorDashboard = () => {
   return (
-    <div className='container mx-auto px-4 py-12'>
-      <div className='max-w-3xl mx-auto bg-white p-8 border border-gray-200 rounded-lg shadow-md'>
-        <h2 className='text-2xl font-semibold mb-4'>Doctors Dashboard</h2>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-          <div className='bg-blue-100 border border-blue-200 rounded-lg p-6'>
-            <h3 className='text-xl font-semibold mb-4'>View Appointments</h3>
-            <p className='text-gray-600'>
-              View and manage appointments scheduled with you.
-            </p>
-            <div className='mt-5'>
+    <div className='container mx-auto px-4 py-10'>
+      <Card className='shadow-2xl'>
+        <CardHeader>
+          <CardTitle className='text-xl'>Doctors Dashboard</CardTitle>
+          <CardDescription>
+            Welcome to the doctors dashboard. Here you can view and manage
+            appointments and prescribe medications to patients.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className='flex flex-col gap-4'>
+          <Card className='shadow-xl bg-cyan-50'>
+            <CardHeader>
+              <CardTitle>View Appointments</CardTitle>
+              <CardDescription>
+                View and manage appointments scheduled with you.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className='text-sm'>
+                You can view and manage appointments scheduled with you by
+                patients.
+              </p>
+            </CardContent>
+            <CardFooter>
               <Link href='/doctor/appointments'>
                 <Button
-                  variant='secondary'
-                  className='hover:bg-blue-600 text-blue-600 hover:text-white font-semibold'
+                  size='sm'
+                  variant='outline'
+                  className='hover:bg-blue-600 text-blue-600 hover:text-white font-semibold shadow-md'
                 >
                   View Appointments
                 </Button>
               </Link>
-            </div>
-          </div>
-          <div className='bg-green-100 border border-green-200 rounded-lg p-6'>
-            <h3 className='text-xl font-semibold mb-4'>
-              Prescribe Medications
-            </h3>
-            <p className='text-gray-600'>
-              Prescribe medications to patients for their treatment.
-            </p>
-            <div className='mt-5'>
+            </CardFooter>
+          </Card>
+
+          <Card className='shadow-xl bg-lime-50'>
+            <CardHeader>
+              <CardTitle>Prescribe Medications</CardTitle>
+              <CardDescription>
+                Prescribe medications to patients for their treatment.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className='text-sm'>
+                You can prescribe medications to patients for their treatment.
+              </p>
+            </CardContent>
+            <CardFooter>
               <Link href='/doctor/prescribe'>
                 <Button
-                  variant='secondary'
-                  className='hover:bg-green-600 text-green-600 hover:text-white font-semibold'
+                  size='sm'
+                  variant='outline'
+                  className='hover:bg-green-600 text-green-600 hover:text-white font-semibold shadow-md'
                 >
                   Prescribe Medications
                 </Button>
               </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+            </CardFooter>
+          </Card>
+        </CardContent>
+        <CardFooter>
+          <Link href='/profile'>
+            <Button variant='link' size='default'>
+              View Profile &rarr;
+            </Button>
+          </Link>
+        </CardFooter>
+      </Card>
     </div>
   )
 }

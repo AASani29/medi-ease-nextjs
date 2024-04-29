@@ -35,6 +35,25 @@ export const getPatientSpecificAppointments = async (patientId: any) => {
   }
 }
 
+export const getDoctorSpecificAppointments = async (doctorId: any) => {
+  try {
+    const appointments = await db.appointment.findMany({
+      where: {
+        doctorId,
+      },
+      include: {
+        doctor: true,
+        patient: true,
+        Prescription: true,
+      },
+    })
+
+    return appointments
+  } catch {
+    return null
+  }
+}
+
 export const getPendingAppointments = async () => {
   try {
     const appointments = await db.appointment.findMany({
