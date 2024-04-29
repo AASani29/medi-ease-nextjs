@@ -1,6 +1,9 @@
 "use server"
 
-import { getAppointmentByTime } from "@/data/appointment"
+import {
+  getAppointmentByTime,
+  getPatientSpecificAppointments,
+} from "@/data/appointment"
 import { db } from "@/lib/db"
 import { AppointmentSchema } from "@/schemas"
 import * as z from "zod"
@@ -20,6 +23,22 @@ export const scheduleAppointment = async (
 
   if (existingAppointment) {
     return { Error: "An appointment already exists at that time" }
+  }
+
+  const existingAppointments = await getPatientSpecificAppointments(patientId)
+
+  let pendingAppointments = []
+
+  existingAppointments?.map((appointment) => {
+    if (appointment.status === "PENDING") {
+      pendingAppointments.push(appointment)
+    }
+  })
+
+  if (pendingAppointments.length > 0) {
+    return {
+      Error: "You already have a pending appointment, please finish it first",
+    }
   }
 
   await db.appointment.create({

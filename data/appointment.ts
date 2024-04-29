@@ -6,6 +6,45 @@ export const getAllAppointments = async () => {
       include: {
         doctor: true,
         patient: true,
+        Prescription: true,
+      },
+    })
+
+    return appointments
+  } catch {
+    return null
+  }
+}
+
+export const getPatientSpecificAppointments = async (patientId: any) => {
+  try {
+    const appointments = await db.appointment.findMany({
+      where: {
+        patientId,
+      },
+      include: {
+        doctor: true,
+        patient: true,
+        Prescription: true,
+      },
+    })
+
+    return appointments
+  } catch {
+    return null
+  }
+}
+
+export const getPendingAppointments = async () => {
+  try {
+    const appointments = await db.appointment.findMany({
+      where: {
+        status: "PENDING",
+      },
+      include: {
+        doctor: true,
+        patient: true,
+        Prescription: true,
       },
     })
 
@@ -24,6 +63,7 @@ export const getAppointmentById = async (id: string) => {
       include: {
         doctor: true,
         patient: true,
+        Prescription: true,
       },
     })
 
@@ -55,6 +95,7 @@ export const getAppointmentsByDoctorId = async (doctorId: string) => {
       },
       include: {
         patient: true,
+        Prescription: true,
       },
     })
 
@@ -72,6 +113,7 @@ export const getAppointmentsByPatientId = async (patientId: string) => {
       },
       include: {
         doctor: true,
+        Prescription: true,
       },
     })
 

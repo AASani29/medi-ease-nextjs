@@ -37,8 +37,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     },
   })
 
-  console.log(newUser)
-
   if (newUser.patient) {
     switch (patientType) {
       case "STUDENT":
