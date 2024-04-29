@@ -98,3 +98,13 @@ export const TestSchema = z.object({
   testName: z.string().min(1, { message: "Test name is required" }),
   details: z.string().min(1, { message: "Destails is required" }),
 })
+
+export const AppointmentSchema = z.object({
+  doctorId: z.string().min(1, { message: "Doctor is required" }),
+  patientId: z.string().min(1, { message: "Patient is required" }),
+  time: z.date().refine((value) => value.getTime() > Date.now(), {
+    message: "Appointment time cannot be in the past",
+  }),
+  weekday: z.string().min(1, { message: "Weekday is required" }),
+  reason: z.string().optional().nullish(),
+})
