@@ -77,5 +77,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     }
   }
 
+  // TODO Need to add doctors to the db when a doctor type user created, currently all are going to patients table, need to fix that as well
+
   return { Success: "User registered" }
 }

@@ -61,7 +61,7 @@ const DoctorDashboard = () => {
               </p>
             </CardContent>
             <CardFooter>
-              <Link href='/doctor/prescribe'>
+              <Link href='/doctor/appointments'>
                 <Button
                   size='sm'
                   variant='outline'

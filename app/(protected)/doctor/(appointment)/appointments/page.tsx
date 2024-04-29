@@ -17,7 +17,7 @@ const AppointmentsPage = async () => {
             All Appointments
           </h4>
           <p className='text-base text-gray-600'>
-            View all the appointments you have with patients here. &rarr;
+            View all the appointments you have with patients here &rarr;
           </p>
         </div>
         {appointments?.map((appointment) => (
