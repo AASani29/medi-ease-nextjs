@@ -2,26 +2,26 @@ import { ServiceCard } from "./service-card"
 
 const services = [
   {
+    title: "Doctor Availability",
+    description: "Find out which doctors are available.",
+    buttonText: "Check Availability",
+    href: "/patient/doctors",
+    from: "from-gray-200 from-20%",
+    to: "to-cyan-300",
+  },
+  {
     title: "Book an Appointment",
     description: "Book an appointment with a doctor",
     buttonText: "Book Now",
     href: "/patient/appointment",
     from: "from-gray-200 from-20%",
-    to: "to-cyan-300",
+    to: "to-lime-300",
   },
   {
     title: "View Medical Records",
     description: "View your medical records from your doctor",
     buttonText: "Medical Records",
     href: "/patient/records",
-    from: "from-gray-200 from-20%",
-    to: "to-lime-300",
-  },
-  {
-    title: "View Prescriptions",
-    description: "View your prescriptions from your doctor",
-    buttonText: "Prescriptions",
-    href: "/patient/prescriptions",
     from: "from-gray-200 from-20%",
     to: "to-rose-300",
   },

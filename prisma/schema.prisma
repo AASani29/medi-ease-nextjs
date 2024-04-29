@@ -34,6 +34,25 @@ model User {
   passwordResetTokenId String?
 
   patient Patient?
+  doctor  Doctor?
+}
+
+model Doctor {
+  id                 String               @id @default(cuid())
+  userId             String               @unique
+  user               User                 @relation(fields: [userId], references: [id])
+  specialization     String
+  DoctorAvailability DoctorAvailability[]
+  Appointment        Appointment[]
+}
+
+model DoctorAvailability {
+  id        String   @id @default(cuid())
+  doctorId  String
+  doctor    Doctor   @relation(fields: [doctorId], references: [id])
+  startTime DateTime
+  endTime   DateTime
+  weekday   String
 }
 
 model Patient {
@@ -49,8 +68,24 @@ model Patient {
   studentInfo StudentInfo?
   facultyInfo FacultyInfo?
   staffInfo   StaffInfo?
+  Appointment Appointment[]
 
   @@unique([userId])
+}
+
+model Appointment {
+  id           String         @id @default(cuid())
+  doctorId     String
+  doctor       Doctor         @relation(fields: [doctorId], references: [id])
+  patientId    String
+  patient      Patient        @relation(fields: [patientId], references: [id])
+  time         DateTime
+  weekday      String
+  reason       String?
+  status       String         @default("PENDING")
+  Prescription Prescription[]
+
+  @@unique([doctorId, time, weekday])
 }
 
 model StudentInfo {
@@ -115,14 +150,39 @@ model Account {
 }
 
 model Test {
-  id       String  @id @default(cuid())
-  testName String  @unique
-  details  String?
+  id             String        @id @default(cuid())
+  testName       String        @unique
+  details        String?
+  Prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
+  prescriptionId String?
 }
 
 model Medicine {
-  id           String  @id @default(cuid())
-  medicineName String  @unique
-  manufacturer String?
-  description  String?
+  id                 String               @id @default(cuid())
+  medicineName       String               @unique
+  manufacturer       String?
+  description        String?
+  PrescribedMedicine PrescribedMedicine[]
+}
+
+model Prescription {
+  id                  String               @id @default(cuid())
+  appointmentId       String
+  appointment         Appointment          @relation(fields: [appointmentId], references: [id])
+  diagnosis           String
+  treatment           String
+  notes               String?
+  prescribedMedicines PrescribedMedicine[]
+  prescribedTests     Test[]
+}
+
+model PrescribedMedicine {
+  id              String       @id @default(cuid())
+  prescription    Prescription @relation(fields: [prescriptionId], references: [id])
+  prescriptionId  String
+  medicine        Medicine     @relation(fields: [medicineId], references: [id])
+  medicineId      String
+  doseAmount      Int
+  frequencyPerDay Int
+  durationInDays  Int
 }

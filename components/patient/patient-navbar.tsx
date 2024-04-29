@@ -21,6 +21,7 @@ function Navbar({ className }: { className?: string }) {
         <MenuItem setActive={setActive} active={active} item='Appointment'>
           <div className='flex flex-col space-y-4 text-sm'>
             <HoveredLink href='/patient/records'>View Appointments</HoveredLink>
+            <HoveredLink href='/patient/doctors'>View Doctors</HoveredLink>
             <HoveredLink href='/patient/appointment'>
               Book Appointment
             </HoveredLink>
