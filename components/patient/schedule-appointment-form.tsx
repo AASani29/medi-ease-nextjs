@@ -37,6 +37,7 @@ import { FormError } from "@/components/form-error"
 import { FormSuccess } from "@/components/form-success"
 import { AppointmentSchema } from "@/schemas"
 import Link from "next/link"
+import { scheduleAppointment } from "@/actions/schedule-appointment"
 
 const weekdays = [
   { id: 1, name: "Monday" },
@@ -72,7 +73,6 @@ const ScheduleAppointmentForm = ({ doctors, patient }: any) => {
   }
 
   const filterAvailableTime = (time, doctor) => {
-    // console.log(doctor.DoctorAvailability[0].startTime)
     const doctorAvailability = doctor.DoctorAvailability.find(
       (availability: any) => availability.weekday === selectedWeekday
     )
@@ -108,7 +108,14 @@ const ScheduleAppointmentForm = ({ doctors, patient }: any) => {
     setError("")
     setSuccess("")
 
-    console.log(values)
+    startTransition(() => {
+      scheduleAppointment(values).then((data) => {
+        setError(data.Error)
+        setSuccess(data.Success)
+      })
+    })
+
+    form.reset()
   }
 
   return (
