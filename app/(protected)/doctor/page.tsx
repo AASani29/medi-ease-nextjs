@@ -50,24 +50,25 @@ const DoctorDashboard = () => {
 
           <Card className='shadow-xl bg-lime-50'>
             <CardHeader>
-              <CardTitle>Prescribe Medications</CardTitle>
+              <CardTitle>Provide Referral</CardTitle>
               <CardDescription>
-                Prescribe medications to patients for their treatment.
+                Provide referral to patients for their treatment.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className='text-sm'>
-                You can prescribe medications to patients for their treatment.
+                You can provide referral to patients for their treatment to
+                other doctors.
               </p>
             </CardContent>
             <CardFooter>
-              <Link href='/doctor/appointments'>
+              <Link href='/doctor/referrals'>
                 <Button
                   size='sm'
                   variant='outline'
                   className='hover:bg-green-600 text-green-600 hover:text-white font-semibold shadow-md'
                 >
-                  Prescribe Medications
+                  Provide Referral
                 </Button>
               </Link>
             </CardFooter>

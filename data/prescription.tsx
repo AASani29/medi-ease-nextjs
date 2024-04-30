@@ -13,3 +13,22 @@ export const getPrescriptionByAppointmentId = async (appointmentId: string) => {
     return null
   }
 }
+
+export const getPrescriptionById = async (prescriptionId: string) => {
+  try {
+    const prescription = await db.prescription.findUnique({
+      where: {
+        id: prescriptionId,
+      },
+      include: {
+        appointment: true,
+        prescribedMedicines: true,
+        prescribedTests: true,
+      },
+    })
+
+    return prescription
+  } catch {
+    return null
+  }
+}

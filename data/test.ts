@@ -33,3 +33,19 @@ export const getTestByName = async (name: string) => {
     return null
   }
 }
+
+export const getPrescribedTestsWithNames = async (prescriptionId: any) => {
+  try {
+    const prescribedTests = await db.prescribedTest.findMany({
+      where: {
+        prescriptionId: prescriptionId,
+      },
+      include: {
+        test: true,
+      },
+    })
+    return prescribedTests
+  } catch (error) {
+    throw new Error("Error fetching prescribed medicines")
+  }
+}

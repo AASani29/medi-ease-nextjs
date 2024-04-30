@@ -45,3 +45,19 @@ export const getMedicinesByManufacturer = async (manufacturer: string) => {
     return null
   }
 }
+
+export const getPrescribedMedicinesWithNames = async (prescriptionId: any) => {
+  try {
+    const prescribedMedicines = await db.prescribedMedicine.findMany({
+      where: {
+        prescriptionId: prescriptionId,
+      },
+      include: {
+        medicine: true,
+      },
+    })
+    return prescribedMedicines
+  } catch (error) {
+    throw new Error("Error fetching prescribed medicines")
+  }
+}

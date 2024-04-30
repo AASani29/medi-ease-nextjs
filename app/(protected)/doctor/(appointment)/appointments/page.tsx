@@ -7,7 +7,6 @@ const AppointmentsPage = async () => {
   const session = await auth()
   const doctor = await getDoctorByUserId(session?.user.id)
   const appointments = await getDoctorSpecificAppointments(doctor?.id)
-  console.log(appointments)
 
   return (
     <div className='p-8 px-24 flex gap-12 w-full'>
