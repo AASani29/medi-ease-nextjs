@@ -18,6 +18,8 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
 }) => {
   const user = await getUserById(appointment.patient.userId)
 
+  const prescriptionId = appointment.Prescription[0]?.id
+
   const appointmentDate = new Date(appointment.time)
   const options = {
     weekday: "short",
@@ -66,7 +68,7 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
           </span>
         </p>
         {appointment.status === "PENDING" ? (
-          <Link href='/doctor/prescribe'>
+          <Link href={`/doctor/prescribe/${appointment.id}`}>
             <Button
               size='sm'
               variant='outline'
@@ -76,7 +78,7 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
             </Button>
           </Link>
         ) : (
-          <Link href='/doctor/prescription'>
+          <Link href={`/doctor/prescription/${prescriptionId}`}>
             <Button
               size='sm'
               variant='secondary'

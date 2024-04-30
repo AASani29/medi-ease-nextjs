@@ -150,11 +150,10 @@ model Account {
 }
 
 model Test {
-  id             String        @id @default(cuid())
-  testName       String        @unique
+  id             String           @id @default(cuid())
+  testName       String           @unique
   details        String?
-  Prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
-  prescriptionId String?
+  PrescribedTest PrescribedTest[]
 }
 
 model Medicine {
@@ -173,7 +172,7 @@ model Prescription {
   treatment           String
   notes               String?
   prescribedMedicines PrescribedMedicine[]
-  prescribedTests     Test[]
+  prescribedTests     PrescribedTest[]
 }
 
 model PrescribedMedicine {
@@ -182,7 +181,15 @@ model PrescribedMedicine {
   prescriptionId  String
   medicine        Medicine     @relation(fields: [medicineId], references: [id])
   medicineId      String
-  doseAmount      Int
-  frequencyPerDay Int
-  durationInDays  Int
+  doseAmount      String
+  frequencyPerDay String
+  durationInDays  String
+}
+
+model PrescribedTest {
+  id             String       @id @default(cuid())
+  prescriptionId String
+  prescription   Prescription @relation(fields: [prescriptionId], references: [id])
+  testId         String
+  test           Test         @relation(fields: [testId], references: [id])
 }

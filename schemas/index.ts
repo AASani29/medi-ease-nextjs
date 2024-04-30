@@ -88,6 +88,16 @@ export const StudentPatientSchema = z.union([PatientSchema, StudentInfoSchema])
 export const FacultyPatientSchema = z.union([PatientSchema, FacultyInfoSchema])
 export const StaffPatientSchema = z.union([PatientSchema, StaffInfoSchema])
 
+export const AppointmentSchema = z.object({
+  doctorId: z.string().min(1, { message: "Doctor is required" }),
+  patientId: z.string().min(1, { message: "Patient is required" }),
+  time: z.date().refine((value) => value.getTime() > Date.now(), {
+    message: "Appointment time cannot be in the past",
+  }),
+  weekday: z.string().min(1, { message: "Weekday is required" }),
+  reason: z.string().optional().nullish(),
+})
+
 export const MedicineSchema = z.object({
   medicineName: z.string().min(1, { message: "Medicine name is required" }),
   manufacturer: z.string().min(1, { message: "Manufacturer is required" }),
@@ -99,12 +109,26 @@ export const TestSchema = z.object({
   details: z.string().min(1, { message: "Destails is required" }),
 })
 
-export const AppointmentSchema = z.object({
-  doctorId: z.string().min(1, { message: "Doctor is required" }),
-  patientId: z.string().min(1, { message: "Patient is required" }),
-  time: z.date().refine((value) => value.getTime() > Date.now(), {
-    message: "Appointment time cannot be in the past",
-  }),
-  weekday: z.string().min(1, { message: "Weekday is required" }),
-  reason: z.string().optional().nullish(),
+export const PrescribedMedicineSchema = z.object({
+  medicineId: z.string().min(1, { message: "Medicine is required" }),
+  doseAmount: z.string().min(1, { message: "Dose amount is required" }),
+  frequencyPerDay: z
+    .string()
+    .min(1, { message: "Frequency per day is required" }),
+  durationInDays: z
+    .string()
+    .min(1, { message: "Duration in days is required" }),
+})
+
+export const PrescribedTestSchema = z.object({
+  testId: z.string().min(1, { message: "Test is required" }),
+})
+
+export const PrescriptionSchema = z.object({
+  appointmentId: z.string().min(1, { message: "Appointment ID is required" }),
+  diagnosis: z.string().min(1, { message: "Diagnosis is required" }),
+  treatment: z.string().min(1, { message: "Treatment is required" }),
+  notes: z.string().optional(),
+  prescribedMedicines: z.array(PrescribedMedicineSchema),
+  prescribedTests: z.array(PrescribedTestSchema),
 })
