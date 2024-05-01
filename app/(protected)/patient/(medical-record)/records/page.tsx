@@ -9,22 +9,25 @@ const MedicalRecords = async () => {
   const patient = await getPatientByUserId(session?.user.id)
   const appointments = await getPatientSpecificAppointments(patient?.id)
 
+  appointments?.sort((a, b) => {
+    if (a.status === "PENDING" && b.status !== "PENDING") return -1
+    if (a.status !== "PENDING" && b.status === "PENDING") return 1
+    return 0
+  })
+
   return (
-    <div className='p-8 flex gap-12 w-full'>
-      <FilterSection />
-      <div className='flex flex-col gap-3'>
-        <div className='mb-4'>
-          <h4 className='text-2xl font-semibold text-navy-700 dark:text-white'>
-            Appointment Records
-          </h4>
-          <p className='text-base text-gray-600'>
-            View all your appointment records below &rarr;
-          </p>
-        </div>
-        {appointments?.map((appointment) => (
-          <AppointmentCard key={appointment.id} appointment={appointment} />
-        ))}
+    <div className='flex flex-col py-8 px-24 gap-2'>
+      <div className='mb-4'>
+        <h4 className='text-2xl font-semibold text-navy-700 dark:text-white'>
+          Appointment Records
+        </h4>
+        <p className='text-base text-gray-600'>
+          View all your appointment records below &rarr;
+        </p>
       </div>
+      {appointments?.map((appointment) => (
+        <AppointmentCard key={appointment.id} appointment={appointment} />
+      ))}
     </div>
   )
 }

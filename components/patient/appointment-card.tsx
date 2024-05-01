@@ -12,11 +12,14 @@ import { Button } from "../ui/button"
 import { FaCalendarWeek } from "react-icons/fa"
 import { FaClock } from "react-icons/fa6"
 import { getUserById } from "@/data/user"
+import { getPrescriptionByAppointmentId } from "@/data/prescription"
 
 const AppointmentCard: React.FC<{ appointment: any }> = async ({
   appointment,
 }) => {
   const user = await getUserById(appointment.doctor.userId)
+
+  const prescription = await getPrescriptionByAppointmentId(appointment.id)
 
   const appointmentDate = new Date(appointment.time)
   const options = {
@@ -32,7 +35,7 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
   const appointmentTimeString = appointmentDate.toLocaleTimeString()
 
   return (
-    <Card className='mb-4 shadow-xl w-[50rem]'>
+    <Card className='mb-4 shadow-xl w-[83.5rem]'>
       <CardHeader>
         <CardTitle>{user?.name}</CardTitle>
         <CardDescription>{appointment.doctor.specialization}</CardDescription>
@@ -48,19 +51,21 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
             <p>{appointmentTimeString}</p>
           </div>
         </div>
-        {appointment.status === "PENDING" ? (
-          <p className='text-sm text-red-600'>No prescription</p>
-        ) : (
-          <Link href='#'>
-            <Button
-              size='sm'
-              variant='secondary'
-              className='hover:text-white hover:bg-gray-800'
-            >
-              View Prescription &rarr;
-            </Button>
-          </Link>
-        )}
+        <div>
+          {appointment.status === "PENDING" ? (
+            <p className='text-sm text-red-600'>No prescription</p>
+          ) : (
+            <Link href={`/patient/prescription/${prescription?.id}`}>
+              <Button
+                size='sm'
+                variant='outline'
+                className='hover:text-white hover:bg-lime-800'
+              >
+                View Prescription &rarr;
+              </Button>
+            </Link>
+          )}
+        </div>
       </CardContent>
       <CardFooter>
         <p className='text-sm text-gray-600'>
@@ -69,7 +74,7 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
             className={`${
               appointment.status === "PENDING"
                 ? "text-red-500"
-                : "text-green-500"
+                : "text-green-700"
             } font-semibold`}
           >
             {appointment.status}

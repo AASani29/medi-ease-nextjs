@@ -22,21 +22,7 @@ import {
 } from "@/data/patient"
 
 import PrescriptionCard from "@/components/patient/prescription-card"
-
-const prescriptions = [
-  {
-    id: 1,
-    doctor: "Dr. John Doe",
-    date: "2021-08-12",
-    description: "Prescription for fever",
-  },
-  {
-    id: 2,
-    doctor: "Dr. Jane Doe",
-    date: "2021-08-15",
-    description: "Prescription for cough",
-  },
-]
+import { getPatientSpecificPrescriptions } from "@/data/prescription"
 
 const ProfilePage = async () => {
   const session = await auth()
@@ -44,6 +30,9 @@ const ProfilePage = async () => {
   if (!session) {
     redirect("/auth/login")
   }
+
+  const patient = await getPatientByUserId(session.user.id)
+  const prescriptions = await getPatientSpecificPrescriptions(patient?.id)
 
   let pfpColor = ""
   let bgColor = ""
@@ -384,8 +373,11 @@ const ProfilePage = async () => {
                 </CardHeader>
                 <CardContent className='space-y-2'>
                   <div className='space-y-1'>
-                    {prescriptions.map((prescription, index) => (
-                      <PrescriptionCard key={index} />
+                    {prescriptions?.map((prescription, index) => (
+                      <PrescriptionCard
+                        key={index}
+                        prescription={prescription}
+                      />
                     ))}
                   </div>
                 </CardContent>
