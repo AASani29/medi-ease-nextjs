@@ -4,6 +4,14 @@ import { PatientNavbar } from "@/components/patient/patient-navbar"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { IoMdChatbubbles } from "react-icons/io"
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const PatientLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth()
@@ -44,7 +52,29 @@ const PatientLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       <Navbar />
       <PatientNavbar />
-      <div className=''>{children}</div>
+      <div className=''>
+        {children}
+        <section className='fixed bottom-0 right-0 p-4'>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant='default'
+                  size='icon'
+                  className='hover:text-white'
+                >
+                  <Link href='/patient/chat'>
+                    <IoMdChatbubbles size={20} />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Ask your queries to our AI chatbot.</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </section>
+      </div>
     </>
   )
 }

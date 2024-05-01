@@ -32,11 +32,23 @@ export default async function Home() {
           <div className='flex flex-col justify-end items-start'>
             {session ? (
               <Link href={dashBoardUrl}>
-                <Button variant='outline'>Dashboard</Button>
+                <Button
+                  className='hover:bg-lime-700 hover:text-white'
+                  size='sm'
+                  variant='outline'
+                >
+                  Dashboard
+                </Button>
               </Link>
             ) : (
               <LoginButton>
-                <Button variant='outline'>Login</Button>
+                <Button
+                  className='hover:bg-indigo-700 hover:text-white'
+                  size='sm'
+                  variant='outline'
+                >
+                  Login
+                </Button>
               </LoginButton>
             )}
           </div>

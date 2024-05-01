@@ -110,7 +110,7 @@ export const LoginForm = () => {
             <Button
               disabled={isPending}
               type='submit'
-              className='w-full font-semibold text-gray-800'
+              className='w-full font-semibold text-gray-800 hover:bg-gray-800 hover:text-white'
               variant='outline'
             >
               Login
