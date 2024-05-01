@@ -76,14 +76,26 @@ const ScheduleAppointmentForm = ({ doctors, patient }: any) => {
     const doctorAvailability = doctor.DoctorAvailability.find(
       (availability: any) => availability.weekday === selectedWeekday
     )
+
     if (!doctorAvailability) return false
 
-    const start = new Date(doctorAvailability.startTime)
-    const end = new Date(doctorAvailability.endTime)
+    const start = new Date(
+      0,
+      0,
+      0,
+      doctorAvailability.startTime.getHours(),
+      doctorAvailability.startTime.getMinutes()
+    )
+    const end = new Date(
+      0,
+      0,
+      0,
+      doctorAvailability.endTime.getHours(),
+      doctorAvailability.endTime.getMinutes()
+    )
+    const selectedTime = new Date(0, 0, 0, time.getHours(), time.getMinutes())
 
-    if (time < start || time > end) return false
-
-    return true
+    return selectedTime >= start && selectedTime <= end
   }
 
   const handleWeekdayChange = (weekday: string) => {

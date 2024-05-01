@@ -8,6 +8,12 @@ const AppointmentsPage = async () => {
   const doctor = await getDoctorByUserId(session?.user.id)
   const appointments = await getDoctorSpecificAppointments(doctor?.id)
 
+  appointments?.sort((a, b) => {
+    if (a.status === "PENDING" && b.status !== "PENDING") return -1
+    if (a.status !== "PENDING" && b.status === "PENDING") return 1
+    return 0
+  })
+
   return (
     <div className='p-8 px-24 flex gap-12 w-full'>
       <div className='flex flex-col gap-3'>
