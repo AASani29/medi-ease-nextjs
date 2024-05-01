@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 import { Button } from "../ui/button"
 
@@ -13,7 +6,7 @@ const PrescriptionCard = ({ prescription }: any) => {
   console.log(prescription)
 
   return (
-    <Card className='shadow-md'>
+    <Card className='shadow-md mb-2'>
       <div className='px-3 py-2 space-y-2'>
         <CardTitle className='font-semibold'>
           Prescription Id : {prescription.id}
@@ -22,7 +15,7 @@ const PrescriptionCard = ({ prescription }: any) => {
           <p> Diagnosis : {prescription.diagnosis}</p>
           <p>
             {" "}
-            Appointment :{" "}
+            Appointment Date :{" "}
             {new Date(prescription.appointment.time).toLocaleDateString(
               "en-US",
               {

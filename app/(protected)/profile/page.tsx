@@ -34,6 +34,14 @@ const ProfilePage = async () => {
   const patient = await getPatientByUserId(session.user.id)
   const prescriptions = await getPatientSpecificPrescriptions(patient?.id)
 
+  const sortedPrescriptions = prescriptions
+    ?.sort(
+      (a, b) =>
+        new Date(b.appointment.time).getTime() -
+        new Date(a.appointment.time).getTime()
+    )
+    .slice(0, 2)
+
   let pfpColor = ""
   let bgColor = ""
 
@@ -373,7 +381,7 @@ const ProfilePage = async () => {
                 </CardHeader>
                 <CardContent className='space-y-2'>
                   <div className='space-y-1'>
-                    {prescriptions?.map((prescription, index) => (
+                    {sortedPrescriptions?.map((prescription, index) => (
                       <PrescriptionCard
                         key={index}
                         prescription={prescription}
