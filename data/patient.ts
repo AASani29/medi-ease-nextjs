@@ -1,5 +1,20 @@
 import { db } from "@/lib/db"
 
+export const getPatientById = async (patientId: any) => {
+  try {
+    const patient = await db.patient.findUnique({
+      where: { id: patientId },
+      include: {
+        user: true,
+      },
+    })
+
+    return patient
+  } catch {
+    return null
+  }
+}
+
 export const getPatientByUserId = async (userId: any) => {
   try {
     const patient = await db.patient.findUnique({
