@@ -1,5 +1,4 @@
 "use server"
-
 import { RegisterSchema } from "@/schemas"
 import * as z from "zod"
 import { db } from "@/lib/db"
@@ -13,7 +12,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { Error: "Invalid fields" }
   }
 
-  const { name, email, password, role, patientType } = validatedFields.data
+  const { name, email, password, role, patientType, specialization } =
+    validatedFields.data
   var hashedPassword = bcrypt.hashSync(password, salt)
   const existingUser = await getUserByEmail(email)
   if (existingUser) {
@@ -27,24 +27,33 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       password: hashedPassword,
       role,
       patientType,
-      patient: {
-        create: {},
-      },
     },
     select: {
       id: true,
-      patient: true,
     },
   })
 
-  if (newUser.patient) {
+  if (role === "PATIENT") {
+    const newPatient = await db.patient.create({
+      data: {
+        user: {
+          connect: {
+            id: newUser.id,
+          },
+        },
+      },
+      select: {
+        id: true,
+      },
+    })
+
     switch (patientType) {
       case "STUDENT":
         await db.studentInfo.create({
           data: {
             patient: {
               connect: {
-                id: newUser.patient.id,
+                id: newPatient.id,
               },
             },
           },
@@ -55,7 +64,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
           data: {
             patient: {
               connect: {
-                id: newUser.patient.id,
+                id: newPatient.id,
               },
             },
           },
@@ -66,7 +75,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
           data: {
             patient: {
               connect: {
-                id: newUser.patient.id,
+                id: newPatient.id,
               },
             },
           },
@@ -75,9 +84,18 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       default:
         break
     }
+  } else if (role === "DOCTOR") {
+    await db.doctor.create({
+      data: {
+        user: {
+          connect: {
+            id: newUser.id,
+          },
+        },
+        specialization,
+      },
+    })
   }
-
-  // TODO Need to add doctors to the db when a doctor type user created, currently all are going to patients table, need to fix that as well
 
   return { Success: "User registered" }
 }

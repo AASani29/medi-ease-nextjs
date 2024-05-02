@@ -155,6 +155,27 @@ export const RegisterForm = () => {
                   </FormItem>
                 )}
               />
+
+              {form.watch("role") === "DOCTOR" && (
+                <FormField
+                  control={form.control}
+                  name='specialization'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id='specialization'
+                          type='text'
+                          placeholder='Set specialization'
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+              )}
               {form.watch("role") === "PATIENT" && (
                 <FormField
                   control={form.control}

@@ -1,3 +1,4 @@
+import { spec } from "node:test/reporters"
 import * as z from "zod"
 
 export const ResetSchema = z.object({
@@ -15,6 +16,7 @@ export const RegisterSchema = z.object({
   password: z.string().min(4, { message: "Minimum 4 characters required" }),
   role: z.enum(["PATIENT", "DOCTOR", "ADMIN", "null"]),
   patientType: z.enum(["STUDENT", "FACULTY", "STAFF", "null"]),
+  specialization: z.string().optional().nullish(),
 })
 
 export const PatientSchema = z.object({

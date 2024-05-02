@@ -34,3 +34,22 @@ export const getDoctorByUserId = async (userId: any) => {
     return null
   }
 }
+
+export const getDoctorById = async (doctorId: any) => {
+  try {
+    const doctor = await db.doctor.findFirst({
+      where: {
+        id: doctorId,
+      },
+      include: {
+        user: true,
+        Appointment: true,
+        DoctorAvailability: true,
+      },
+    })
+
+    return doctor
+  } catch {
+    return null
+  }
+}

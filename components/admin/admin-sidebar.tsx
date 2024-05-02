@@ -9,6 +9,7 @@ import { GiMedicinePills } from "react-icons/gi"
 import { MdKeyboardArrowRight } from "react-icons/md"
 import { MdKeyboardArrowLeft } from "react-icons/md"
 import { RiTestTubeFill } from "react-icons/ri"
+import { FaUserDoctor } from "react-icons/fa6"
 
 import React, { useContext } from "react"
 import SidebarContext from "./context/SidebarContext"
@@ -24,6 +25,11 @@ const sidebarItems = [
     name: "Users",
     href: "/admin/users",
     icon: FaUsers,
+  },
+  {
+    name: "Doctors",
+    href: "/admin/doctors",
+    icon: FaUserDoctor,
   },
   {
     name: "Medicines",

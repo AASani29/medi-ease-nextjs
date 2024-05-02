@@ -194,6 +194,27 @@ const AddUserPage = () => {
                     )}
                   />
                 )}
+
+                {form.watch("role") === "DOCTOR" && (
+                  <FormField
+                    control={form.control}
+                    name='specialization'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            id='specialization'
+                            type='text'
+                            placeholder='Set specialization'
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                        <FormMessage {...field} />
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
               <FormError message={error} />
               <FormSuccess message={success} />
