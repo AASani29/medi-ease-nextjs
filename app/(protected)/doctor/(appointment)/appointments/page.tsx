@@ -25,6 +25,13 @@ const AppointmentsPage = async () => {
             View all the appointments you have with patients here &rarr;
           </p>
         </div>
+
+        {appointments?.length === 0 && (
+          <div className='flex items-center justify-center w-[80rem] h-64'>
+            <p className='text-lg text-gray-500'>No appointments found</p>
+          </div>
+        )}
+
         {appointments?.map((appointment) => (
           <AppointmentCard key={appointment.id} appointment={appointment} />
         ))}

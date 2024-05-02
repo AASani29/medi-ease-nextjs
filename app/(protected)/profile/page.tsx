@@ -248,26 +248,25 @@ const ProfilePage = async () => {
                 </CardHeader>
                 <CardContent className='space-y-2'>
                   <div className='space-y-1'>
-                    <p className='border-2 py-1 px-2 text-sm rounded-md'>
+                    <p className='border-2 py-1 px-2 text-sm rounded-md text-blue-600'>
+                      <strong className='text-black'>Department :</strong>{" "}
                       {session.user.patientType === "STUDENT" &&
-                      studedntInfo ? (
+                      studedntInfo?.department ? (
                         <>
-                          <strong>Department :</strong>{" "}
                           <span className='text-blue-600'>
                             {studedntInfo.department}
                           </span>
                         </>
                       ) : session.user.patientType === "FACULTY" &&
-                        facultyInfo ? (
+                        facultyInfo?.department ? (
                         <>
-                          <strong>Department :</strong>{" "}
                           <span className='text-blue-600'>
                             {facultyInfo.department}
                           </span>
                         </>
-                      ) : session.user.patientType === "STAFF" && staffInfo ? (
+                      ) : session.user.patientType === "STAFF" &&
+                        staffInfo?.department ? (
                         <>
-                          <strong>Department :</strong>{" "}
                           <span className='text-blue-600'>
                             {staffInfo.department}
                           </span>
@@ -279,10 +278,10 @@ const ProfilePage = async () => {
                   </div>
                   {session.user.patientType === "STUDENT" && (
                     <div className='space-y-1'>
-                      <p className='border-2 py-1 px-2 text-sm rounded-md'>
-                        {studedntInfo ? (
+                      <p className='border-2 py-1 px-2 text-sm rounded-md text-blue-600'>
+                        <strong className='text-black'>Program :</strong>{" "}
+                        {studedntInfo?.program ? (
                           <>
-                            <strong>Program :</strong>{" "}
                             <span className='text-blue-600'>
                               {studedntInfo.program}
                             </span>
@@ -296,7 +295,7 @@ const ProfilePage = async () => {
                   <div className='space-y-1'>
                     <p className='border-2 py-1 px-2 text-sm rounded-md'>
                       {session.user.patientType === "STUDENT" &&
-                      studedntInfo ? (
+                      studedntInfo?.currentSemester ? (
                         <>
                           <strong>Current Semester :</strong>{" "}
                           <span className='text-blue-600'>
@@ -306,7 +305,7 @@ const ProfilePage = async () => {
                       ) : session.user.patientType === "STUDENT" ? (
                         "Add your current semester"
                       ) : session.user.patientType === "FACULTY" &&
-                        facultyInfo ? (
+                        facultyInfo?.position ? (
                         <>
                           <strong>Position:</strong>{" "}
                           <span className='text-blue-600'>
@@ -330,7 +329,7 @@ const ProfilePage = async () => {
                   <div className='space-y-1'>
                     <p className='border-2 py-1 px-2 text-sm rounded-md'>
                       {session.user.patientType === "STUDENT" &&
-                      studedntInfo ? (
+                      studedntInfo?.originCountry ? (
                         <>
                           <strong>Origin Country :</strong>{" "}
                           <span className='text-blue-600'>
@@ -340,7 +339,7 @@ const ProfilePage = async () => {
                       ) : session.user.patientType === "STUDENT" ? (
                         "Add your origin country"
                       ) : session.user.patientType === "FACULTY" &&
-                        facultyInfo ? (
+                        facultyInfo?.hireDate ? (
                         <>
                           <strong>Joining :</strong>{" "}
                           <span className='text-blue-600'>
@@ -351,7 +350,8 @@ const ProfilePage = async () => {
                         </>
                       ) : session.user.patientType === "FACULTY" ? (
                         "Add your joining date"
-                      ) : session.user.patientType === "STAFF" && staffInfo ? (
+                      ) : session.user.patientType === "STAFF" &&
+                        staffInfo?.hireDate ? (
                         <>
                           <strong>Joining :</strong>{" "}
                           <span className='text-blue-600'>
@@ -381,6 +381,12 @@ const ProfilePage = async () => {
                 </CardHeader>
                 <CardContent className='space-y-2'>
                   <div className='space-y-1'>
+                    {sortedPrescriptions?.length === 0 && (
+                      <p className='text-sm text-gray-600 border-2 p-2 rounded-md'>
+                        No prescriptions available yet.
+                      </p>
+                    )}
+
                     {sortedPrescriptions?.map((prescription, index) => (
                       <PrescriptionCard
                         key={index}

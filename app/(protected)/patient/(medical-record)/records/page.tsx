@@ -25,6 +25,13 @@ const MedicalRecords = async () => {
           View all your appointment records below &rarr;
         </p>
       </div>
+
+      {appointments?.length === 0 && (
+        <div className='flex items-center justify-center h-40'>
+          <p className='text-lg text-gray-500'>No appointments found</p>
+        </div>
+      )}
+
       {appointments?.map((appointment) => (
         <AppointmentCard key={appointment.id} appointment={appointment} />
       ))}

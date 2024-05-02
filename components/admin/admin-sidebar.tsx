@@ -73,7 +73,7 @@ const AdminSidebar: React.FC = () => {
             alt='MediEase Logo'
           />
           <p className={`text-2xl ${isCollapsed ? "hidden" : "block"}`}>
-            Medi<span className='text-cyan-400'>Ease</span>
+            Medi<span className='text-cyan-400'> ADMIN</span>
           </p>
         </div>
         <ul className='list-none'>

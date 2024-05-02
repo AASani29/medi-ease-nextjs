@@ -25,6 +25,13 @@ const PrescriptionsPage = async () => {
           Here are the prescriptions given to you by your doctor &rarr;
         </p>
       </div>
+
+      {sortedPrescriptions?.length === 0 && (
+        <div className='flex items-center justify-center h-40'>
+          <p className='text-lg text-gray-500'>No prescriptions found</p>
+        </div>
+      )}
+
       {sortedPrescriptions?.map((prescription) => (
         <PrescriptionCardDetail
           key={prescription.id}
