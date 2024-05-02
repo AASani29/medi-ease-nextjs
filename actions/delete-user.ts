@@ -14,6 +14,7 @@ export const deleteUserAction = async (userId: string) => {
             staffInfo: true,
           },
         },
+        doctor: true,
       },
     })
 
@@ -47,6 +48,14 @@ export const deleteUserAction = async (userId: string) => {
       await db.patient.delete({
         where: { id: user.patient.id },
       })
+    }
+
+    if (user.doctor) {
+      if (user.role === "DOCTOR") {
+        await db.doctor.delete({
+          where: { id: user.doctor.id },
+        })
+      }
     }
 
     // Delete the user record

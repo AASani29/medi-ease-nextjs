@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic"
 export async function POST(request: Request) {
   const { messages }: { messages: Message[] } = await request.json()
 
-  const model = ollama.ChatTextGenerator({ model: "mistral" }).withChatPrompt()
+  const model = ollama.ChatTextGenerator({ model: "gemma" }).withChatPrompt()
 
   const prompt = {
     system:
