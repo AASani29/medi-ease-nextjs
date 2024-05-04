@@ -10,8 +10,6 @@ import Link from "next/link"
 import { Button } from "../ui/button"
 
 const PrescriptionCardDetail = ({ prescription }: any) => {
-  console.log(prescription)
-
   return (
     <Card className='shadow-md mb-2'>
       <CardHeader>

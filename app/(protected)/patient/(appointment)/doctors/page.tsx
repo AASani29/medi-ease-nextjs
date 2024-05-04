@@ -4,8 +4,6 @@ import { getAllDoctors } from "@/data/doctor"
 const DoctorsPage = async () => {
   const doctors = await getAllDoctors()
 
-  console.log(doctors)
-
   return (
     <div className='px-12 py-10'>
       <div>
