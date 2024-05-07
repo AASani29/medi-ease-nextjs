@@ -19,6 +19,9 @@
 # VS Code
 .vscode
 
+# IntelliJ IDEA
+.idea
+
 # misc
 .DS_Store
 *.pem
