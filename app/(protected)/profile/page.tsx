@@ -207,6 +207,11 @@ const ProfilePage = async () => {
 												{patientInfo?.dob
 													? new Date(patientInfo.dob).toLocaleDateString(
 															"en-GB",
+															{
+																year: "numeric",
+																month: "long",
+																day: "numeric",
+															},
 														)
 													: "Add your Date of Birth"}
 											</span>
@@ -367,6 +372,11 @@ const ProfilePage = async () => {
 													<span className="text-blue-600">
 														{new Date(facultyInfo.hireDate).toLocaleDateString(
 															"en-GB",
+															{
+																year: "numeric",
+																month: "long",
+																day: "numeric",
+															},
 														)}
 													</span>
 												</>
@@ -379,6 +389,11 @@ const ProfilePage = async () => {
 													<span className="text-blue-600">
 														{new Date(staffInfo.hireDate).toLocaleDateString(
 															"en-GB",
+															{
+																year: "numeric",
+																month: "long",
+																day: "numeric",
+															},
 														)}
 													</span>
 												</>
