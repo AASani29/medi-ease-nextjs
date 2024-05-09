@@ -72,10 +72,6 @@ const ProfilePage = async () => {
 		staffInfo = await getStaffInfo(patientInfo.id);
 	}
 
-	console.log(studedntInfo);
-	console.log(facultyInfo);
-	console.log(staffInfo);
-
 	return (
 		<>
 			<Navbar />
