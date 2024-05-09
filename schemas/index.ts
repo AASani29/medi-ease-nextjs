@@ -1,6 +1,4 @@
-import { spec } from "node:test/reporters";
 import * as z from "zod";
-import DoctorAvailability from "../app/(protected)/admin/(doctor)/doctor-availability/[doctorId]/page";
 
 export const ResetSchema = z.object({
 	email: z.string().email({ message: "Email is required" }),
@@ -22,11 +20,7 @@ export const RegisterSchema = z.object({
 
 export const PatientSchema = z.object({
 	dob: z.date().optional().nullish(),
-	gender: z
-		.string()
-		.max(5, { message: "Gender must be at most 5 characters" })
-		.optional()
-		.nullish(),
+	gender: z.enum(["Male", "Female", "NON-Binary"]).optional().nullish(),
 	phone: z
 		.string()
 		.max(25, { message: "Phone number must be at most 25 characters" })
@@ -41,7 +35,7 @@ export const PatientSchema = z.object({
 });
 
 export const StudentInfoSchema = z.object({
-	currentSemester: z.number().int().optional().nullish(),
+	currentSemester: z.string().optional().nullish(),
 	department: z
 		.string()
 		.max(50, { message: "Department must be at most 50 characters" })
@@ -87,9 +81,9 @@ export const StaffInfoSchema = z.object({
 	hireDate: z.date().optional().nullish(),
 });
 
-export const StudentPatientSchema = z.union([PatientSchema, StudentInfoSchema]);
-export const FacultyPatientSchema = z.union([PatientSchema, FacultyInfoSchema]);
-export const StaffPatientSchema = z.union([PatientSchema, StaffInfoSchema]);
+export const StudentPatientSchema = PatientSchema.merge(StudentInfoSchema);
+export const FacultyPatientSchema = PatientSchema.merge(FacultyInfoSchema);
+export const StaffPatientSchema = PatientSchema.merge(StaffInfoSchema);
 
 export const AppointmentSchema = z.object({
 	doctorId: z.string().min(1, { message: "Doctor is required" }),

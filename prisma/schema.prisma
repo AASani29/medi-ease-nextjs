@@ -60,9 +60,9 @@ model Patient {
   userId     String
   user       User      @relation(fields: [userId], references: [id])
   dob        DateTime?
-  gender     String?   @db.Char(5)
-  phone      String?   @db.VarChar(25)
-  bloodGroup String?   @db.VarChar(10)
+  gender     String?   @db.Char(225)
+  phone      String?   @db.VarChar(225)
+  bloodGroup String?   @db.VarChar(225)
   address    String?   @db.Text
 
   studentInfo StudentInfo?
@@ -109,17 +109,17 @@ model StudentInfo {
   patientId       String  @unique
   patient         Patient @relation(fields: [patientId], references: [id])
   currentSemester String?
-  department      String? @db.VarChar(50)
-  program         String? @db.VarChar(50)
-  originCountry   String? @db.VarChar(50)
+  department      String? @db.VarChar(225)
+  program         String? @db.VarChar(225)
+  originCountry   String? @db.VarChar(225)
 }
 
 model FacultyInfo {
   id         String    @id @default(cuid())
   patientId  String    @unique
   patient    Patient   @relation(fields: [patientId], references: [id])
-  department String?   @db.VarChar(50)
-  position   String?   @db.VarChar(50)
+  department String?   @db.VarChar(225)
+  position   String?   @db.VarChar(225)
   hireDate   DateTime?
 }
 
@@ -127,8 +127,8 @@ model StaffInfo {
   id         String    @id @default(cuid())
   patientId  String    @unique
   patient    Patient   @relation(fields: [patientId], references: [id])
-  department String?   @db.VarChar(50)
-  position   String?   @db.VarChar(50)
+  department String?   @db.VarChar(225)
+  position   String?   @db.VarChar(225)
   hireDate   DateTime?
 }
 
