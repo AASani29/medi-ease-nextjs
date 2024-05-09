@@ -73,6 +73,22 @@ model Patient {
   @@unique([userId])
 }
 
+// model Reimbursement {
+//   id          Int        @id @default(autoincrement())
+//   patient     Patient    @relation(fields: [patientId], references: [id])
+//   patientId   String
+//   amountOwed  Float
+//   documents   Document[]
+//   submittedAt DateTime
+// }
+
+// model Document {
+//   id              Int           @id @default(autoincrement())
+//   reimbursement   Reimbursement @relation(fields: [reimbursementId], references: [id])
+//   reimbursementId Int
+//   filename        String
+// }
+
 model Appointment {
   id           String         @id @default(cuid())
   doctorId     String
