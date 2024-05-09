@@ -139,12 +139,6 @@ export const PrescriptionSchema = z.object({
 export const DoctorAvailabilitySchema = z.object({
 	doctorId: z.string().min(1, { message: "Doctor is required" }),
 	weekday: z.string().min(1, { message: "Weekday is required" }),
-	startTime: z
-		.string()
-		.regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/i, {
-			message: "Invalid start time format, expected ISO 8601 date-time string",
-		}),
-	endTime: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/i, {
-		message: "Invalid end time format, expected ISO 8601 date-time string",
-	}),
+	startTime: z.date(),
+	endTime: z.date(),
 });

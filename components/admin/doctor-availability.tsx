@@ -19,6 +19,13 @@ import {
 	FormMessage,
 	FormDescription,
 } from "@/components/ui/form";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
@@ -30,6 +37,16 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 
+const weekdays = [
+	{ id: 1, name: "Monday" },
+	{ id: 2, name: "Tuesday" },
+	{ id: 3, name: "Wednesday" },
+	{ id: 4, name: "Thursday" },
+	{ id: 5, name: "Friday" },
+	{ id: 6, name: "Saturday" },
+	{ id: 7, name: "Sunday" },
+];
+
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -39,9 +56,9 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { addAvailability } from "@/actions/add-availability";
 
-import TimePicker from "react-time-picker";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-calendar/dist/Calendar.css";
 
 const DoctorAvailabilityForm = ({ doctorId }: any) => {
 	const [isPending, startTransition] = useTransition();
@@ -106,13 +123,25 @@ const DoctorAvailabilityForm = ({ doctorId }: any) => {
 									render={({ field }) => (
 										<FormItem>
 											<FormControl>
-												<Input
-													{...field}
-													id="weekday"
-													type="text"
-													placeholder="Available Weekday"
-													disabled={isPending}
-												/>
+												<Select
+													onValueChange={(value) => {
+														field.onChange(value);
+													}}
+													defaultValue={field.value}
+												>
+													<FormControl>
+														<SelectTrigger>
+															<SelectValue placeholder="Select Weekday" />
+														</SelectTrigger>
+													</FormControl>
+													<SelectContent>
+														{weekdays.map((weekday: any) => (
+															<SelectItem key={weekday.id} value={weekday.name}>
+																{weekday.name}
+															</SelectItem>
+														))}
+													</SelectContent>
+												</Select>
 											</FormControl>
 											<FormMessage {...field} />
 										</FormItem>
@@ -135,7 +164,7 @@ const DoctorAvailabilityForm = ({ doctorId }: any) => {
 															)}
 														>
 															{field.value ? (
-																format(field.value, "PPP")
+																format(field.value, "h:mm aa")
 															) : (
 																<span>Pick a time</span>
 															)}
@@ -144,15 +173,64 @@ const DoctorAvailabilityForm = ({ doctorId }: any) => {
 													</FormControl>
 												</PopoverTrigger>
 												<PopoverContent className="w-auto p-0" align="start">
-													{/* <TimePicker
+													<DatePicker
 														selected={field.value}
 														onChange={field.onChange}
-														format="h:m:s a"
-													/> */}
+														showTimeSelect
+														showTimeSelectOnly
+														timeIntervals={15}
+														timeCaption="Time"
+														dateFormat="h:mm aa"
+													/>
 												</PopoverContent>
 											</Popover>
 											<FormDescription>
-												Your date of birth is used to calculate your age.
+												Select the starting time for the availability
+											</FormDescription>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+
+								<FormField
+									control={form.control}
+									name="endTime"
+									render={({ field }) => (
+										<FormItem className="flex flex-col">
+											<FormLabel>Ending Time</FormLabel>
+											<Popover>
+												<PopoverTrigger asChild>
+													<FormControl>
+														<Button
+															variant={"outline"}
+															className={cn(
+																"w-[240px] pl-3 text-left font-normal",
+																!field.value && "text-muted-foreground",
+															)}
+														>
+															{field.value ? (
+																format(field.value, "h:mm aa")
+															) : (
+																<span>Pick a time</span>
+															)}
+															<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+														</Button>
+													</FormControl>
+												</PopoverTrigger>
+												<PopoverContent className="w-auto p-0" align="start">
+													<DatePicker
+														selected={field.value}
+														onChange={field.onChange}
+														showTimeSelect
+														showTimeSelectOnly
+														timeIntervals={15}
+														timeCaption="Time"
+														dateFormat="h:mm aa"
+													/>
+												</PopoverContent>
+											</Popover>
+											<FormDescription>
+												Select the ending time for the availability
 											</FormDescription>
 											<FormMessage />
 										</FormItem>
@@ -167,14 +245,14 @@ const DoctorAvailabilityForm = ({ doctorId }: any) => {
 								className="w-full font-semibold shadow-md active:translate-y-[0.12rem] duration-300 hover:text-white hover:bg-gray-900"
 								variant="outline"
 							>
-								Add Medicine
+								Add Availability
 							</Button>
 						</form>
 					</Form>
 				</CardContent>
 				<CardFooter>
 					<Button variant="link">
-						<a href="/admin/medicines">Go back</a>
+						<a href={`/admin/doctor-availability/${doctorId}`}>Go back</a>
 					</Button>
 				</CardFooter>
 			</Card>
