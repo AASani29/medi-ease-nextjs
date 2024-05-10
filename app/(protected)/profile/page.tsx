@@ -25,9 +25,11 @@ import {
 
 import PrescriptionCard from "@/components/patient/prescription-card";
 import { getPatientSpecificPrescriptions } from "@/data/prescription";
+import UploadImageButton from "@/components/patient/edit-profile/upload-image-button";
 
 const ProfilePage = async () => {
 	const session = await auth();
+	const user = session?.user;
 
 	if (!session) {
 		redirect("/auth/login");
@@ -80,11 +82,13 @@ const ProfilePage = async () => {
 					<div className="relative flex flex-col items-center rounded-[20px] w-[400px] mx-auto p-4 bg-white bg-clip-border shadow-2xl dark:!bg-navy-800 dark:text-white dark:!shadow-none mb-6 mt-12">
 						<div className="relative flex h-32 w-full justify-center rounded-xl bg-cover">
 							<div
-								className={`${bgColor} h-32 w-96 rounded-lg flex justify-center`}
+								className={`${bgColor} h-32 w-96 rounded-lg flex items-center justify-center`}
 							>
 								<div
-									className={`absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white ${pfpColor} dark:!border-navy-700`}
-								/>
+									className={`absolute -bottom-11 flex h-[87px] w-[87px] rounded-full items-end justify-end border-[4px] border-white ${pfpColor} dark:!border-navy-700`}
+								>
+									<UploadImageButton user={user} />
+								</div>
 							</div>
 						</div>
 						<div className="mt-16 flex flex-col items-center">
