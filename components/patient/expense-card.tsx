@@ -82,29 +82,6 @@ const ExpenseCard: React.FC<{ reimbursementRequest: ReimbursementRequest }> =
 								View Appointment &rarr;
 							</Link>
 						</Button>
-
-						{reimbursementRequest.status === "PENDING" ? (
-							<Button
-								size="sm"
-								variant="outline"
-								className="hover:bg-rose-600 hover:text-white border-gray-400"
-							>
-								<Link
-									href={`/patient/reimbursement/${reimbursementRequest.appointmentId}`}
-								>
-									Get Reimbursement &rarr;
-								</Link>
-							</Button>
-						) : (
-							<Button
-								disabled
-								size="sm"
-								variant="outline"
-								className="bg-rose-400 text-white border-gray-400"
-							>
-								Reimbursement Complete
-							</Button>
-						)}
 					</div>
 				</CardContent>
 				<CardFooter className="flex flex-col">

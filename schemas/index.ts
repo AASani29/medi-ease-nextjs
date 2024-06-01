@@ -140,7 +140,7 @@ export const DoctorAvailabilitySchema = z.object({
 export const reimbursementRequestSchema = z.object({
 	patientId: z.string(),
 	appointmentId: z.string(),
-	amount: z.number(),
+	amount: z.string(),
 	billImgUrl: z.string(),
 	referralImgUrl: z.string().nullable().optional(),
 	prescriptionImgUrl: z.string().nullable().optional(),
