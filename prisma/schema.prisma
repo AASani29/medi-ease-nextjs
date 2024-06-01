@@ -65,41 +65,41 @@ model Patient {
   bloodGroup String?   @db.VarChar(225)
   address    String?   @db.Text
 
-  studentInfo StudentInfo?
-  facultyInfo FacultyInfo?
-  staffInfo   StaffInfo?
-  Appointment Appointment[]
+  studentInfo          StudentInfo?
+  facultyInfo          FacultyInfo?
+  staffInfo            StaffInfo?
+  Appointment          Appointment[]
+  ReimbursementRequest ReimbursementRequest[]
 
   @@unique([userId])
 }
 
-// model Reimbursement {
-//   id          Int        @id @default(autoincrement())
-//   patient     Patient    @relation(fields: [patientId], references: [id])
-//   patientId   String
-//   amountOwed  Float
-//   documents   Document[]
-//   submittedAt DateTime
-// }
-
-// model Document {
-//   id              Int           @id @default(autoincrement())
-//   reimbursement   Reimbursement @relation(fields: [reimbursementId], references: [id])
-//   reimbursementId Int
-//   filename        String
-// }
+model ReimbursementRequest {
+  id                 String      @id @default(cuid())
+  patientId          String
+  appointmentId      String
+  amount             Float
+  billImgUrl         String
+  referralImgUrl     String?
+  prescriptionImgUrl String?
+  status             String      @default("PENDING")
+  submittedAt        DateTime    @default(now())
+  Patient            Patient     @relation(fields: [patientId], references: [id])
+  Appointment        Appointment @relation(fields: [appointmentId], references: [id])
+}
 
 model Appointment {
-  id           String         @id @default(cuid())
-  doctorId     String
-  doctor       Doctor         @relation(fields: [doctorId], references: [id])
-  patientId    String
-  patient      Patient        @relation(fields: [patientId], references: [id])
-  time         DateTime
-  weekday      String
-  reason       String?
-  status       String         @default("PENDING")
-  Prescription Prescription[]
+  id                   String                 @id @default(cuid())
+  doctorId             String
+  doctor               Doctor                 @relation(fields: [doctorId], references: [id])
+  patientId            String
+  patient              Patient                @relation(fields: [patientId], references: [id])
+  time                 DateTime
+  weekday              String
+  reason               String?
+  status               String                 @default("PENDING")
+  Prescription         Prescription[]
+  ReimbursementRequest ReimbursementRequest[]
 
   @@unique([doctorId, time, weekday])
 }

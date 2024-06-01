@@ -19,6 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	getFacultyInfo,
 	getPatientByUserId,
+	getPatientDueAmount,
 	getStaffInfo,
 	getStudentInfo,
 } from "@/data/patient";
@@ -37,6 +38,9 @@ const ProfilePage = async () => {
 
 	const patient = await getPatientByUserId(session.user.id);
 	const prescriptions = await getPatientSpecificPrescriptions(patient?.id);
+
+	const dueAmount = await getPatientDueAmount(patient?.id);
+	const totalDue = dueAmount?.reduce((acc, curr) => acc + curr.amount, 0);
 
 	const sortedPrescriptions = prescriptions
 		?.sort(
@@ -79,10 +83,10 @@ const ProfilePage = async () => {
 			<Navbar />
 			<div className="flex gap-28 items-center justify-center mt-10">
 				<div className="flex flex-col justify-center items-center">
-					<div className="relative flex flex-col items-center rounded-[20px] w-[400px] mx-auto p-4 bg-white bg-clip-border shadow-2xl dark:!bg-navy-800 dark:text-white dark:!shadow-none mb-6 mt-12">
+					<div className="relative flex flex-col items-center rounded-[20px] w-[490px] mx-auto p-4 bg-white bg-clip-border shadow-2xl dark:!bg-navy-800 dark:text-white dark:!shadow-none mb-6 mt-12">
 						<div className="relative flex h-32 w-full justify-center rounded-xl bg-cover">
 							<div
-								className={`${bgColor} h-32 w-96 rounded-lg flex items-center justify-center`}
+								className={`${bgColor} h-32 w-[27rem] rounded-lg flex items-center justify-center`}
 							>
 								<div
 									className={`absolute -bottom-11 flex h-[87px] w-[87px] rounded-full items-end justify-end border-[4px] border-white ${pfpColor} dark:!border-navy-700`}
@@ -107,12 +111,23 @@ const ProfilePage = async () => {
 								<p className="text-sm font-normal text-gray-600">Role</p>
 							</div>
 							{session?.user.role === "PATIENT" && (
-								<div className="flex flex-col items-center justify-center">
-									<p className="text-2xl font-bold text-navy-700 dark:text-white">
-										{session.user?.patientType}
-									</p>
-									<p className="text-sm font-normal text-gray-600">Type</p>
-								</div>
+								<>
+									<div className="flex flex-col items-center justify-center">
+										<p className="text-2xl font-bold text-navy-700 dark:text-white">
+											{session.user?.patientType}
+										</p>
+										<p className="text-sm font-normal text-gray-600">Type</p>
+									</div>
+
+									<div className="flex flex-col items-center justify-center">
+										<p className="text-2xl font-bold text-navy-700 dark:text-white">
+											{totalDue} BDT
+										</p>
+										<p className="text-sm font-normal text-gray-600">
+											Due Amount
+										</p>
+									</div>
+								</>
 							)}
 						</div>
 					</div>
