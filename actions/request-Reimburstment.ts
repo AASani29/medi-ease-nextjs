@@ -38,9 +38,9 @@ export const requestReimburstment = async (
 	}
 
 	const numberAmount = Number.parseFloat(amount);
-	const billFileName = getFileName(billImgUrl);
-	const refFileName = getFileName(referralImgUrl);
-	const presFileName = getFileName(prescriptionImgUrl);
+	const billFileName = `${appointmentId}-${getFileName(billImgUrl)}`;
+	const refFileName = `${appointmentId}-${getFileName(referralImgUrl)}`;
+	const presFileName = `${appointmentId}-${getFileName(prescriptionImgUrl)}`;
 
 	await db.reimbursementRequest.create({
 		data: {
