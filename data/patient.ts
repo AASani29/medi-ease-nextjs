@@ -80,3 +80,19 @@ export const getPatientDueAmount = async (patientId: any) => {
 		return null;
 	}
 };
+
+export const getPatientReimbursementRequests = async (patientId: any) => {
+	try {
+		const patientReimbursementRequests = await db.reimbursementRequest.findMany(
+			{
+				where: {
+					patientId,
+				},
+			},
+		);
+
+		return patientReimbursementRequests;
+	} catch {
+		return null;
+	}
+};
