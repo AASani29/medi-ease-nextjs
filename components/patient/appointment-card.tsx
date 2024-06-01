@@ -51,7 +51,16 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
 						<p>{appointmentTimeString}</p>
 					</div>
 				</div>
-				<div>
+				<div className="flex gap-3 items-center">
+					<Button
+						size="sm"
+						variant="outline"
+						className="hover:bg-indigo-600 hover:text-white border-gray-400"
+					>
+						<Link href={`/patient/records/${appointment.id}`}>
+							View Appointment &rarr;
+						</Link>
+					</Button>
 					{appointment.status === "PENDING" ? (
 						<p className="text-sm text-red-600">No prescription</p>
 					) : (
@@ -59,7 +68,7 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
 							<Button
 								size="sm"
 								variant="outline"
-								className="hover:text-white hover:bg-lime-800"
+								className="hover:text-white hover:bg-lime-700 border-gray-400"
 							>
 								View Prescription &rarr;
 							</Button>

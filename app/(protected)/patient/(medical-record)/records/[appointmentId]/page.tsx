@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { getAppointmentById } from "@/data/appointment";
+import Link from "next/link";
 
 const AppointmentPage = async ({ params }: any) => {
 	const { appointmentId } = params;
@@ -7,7 +9,7 @@ const AppointmentPage = async ({ params }: any) => {
 
 	console.log(appointment);
 
-	return <div>AppointmentPage</div>;
+	return <div>Appointment Details Page</div>;
 };
 
 export default AppointmentPage;

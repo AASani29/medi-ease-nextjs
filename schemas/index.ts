@@ -136,3 +136,14 @@ export const DoctorAvailabilitySchema = z.object({
 	startTime: z.date(),
 	endTime: z.date(),
 });
+
+export const reimbursementRequestSchema = z.object({
+	patientId: z.string(),
+	appointmentId: z.string(),
+	amount: z.number(),
+	billImgUrl: z.string(),
+	referralImgUrl: z.string().nullable().optional(),
+	prescriptionImgUrl: z.string().nullable().optional(),
+	status: z.string().default("PENDING"),
+	submittedAt: z.date().default(new Date()),
+});
