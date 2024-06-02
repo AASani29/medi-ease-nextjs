@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import LoginButton from "@/components/auth/login-button";
+import * as React from "react";
 
 import { auth } from "@/auth";
 
@@ -73,13 +74,13 @@ export default async function Home() {
           Welcome to IUT Medical Centre
         </h3>
 
-        <section id="about-section" className="grid grid-cols-2 mb-40">
+        <section id="about-section" className="mb-20">
           <div className="mt-[20rem]">
             <h1 className="text-left text-3xl mb-4 px-4 text-blue-500 ">
               University Medical Centre
             </h1>
 
-            <p className="px-4 mb-6">
+            <p className="px-4 mb-6 text-xl ">
               IUT has a Medical Center at the North- West corner of the campus.
               It has five well equipped observation beds, Mini operation Room,
               Medicine store, waiting area, and a pathological laboratory
@@ -90,15 +91,6 @@ export default async function Home() {
               doctor on duty can be contacted on the Medical Centre Hotline: +88
               01844 056056.
             </p>
-          </div>
-          <div className="grid justify-center items-end mt-[24rem] ">
-            <Image
-              className=""
-              src="/medical_centre.jpg"
-              alt="Medical Centre Image"
-              width={400}
-              height={200}
-            />
           </div>
         </section>
       </div>
