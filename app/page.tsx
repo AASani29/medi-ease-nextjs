@@ -1,96 +1,107 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import LoginButton from "@/components/auth/login-button"
-import { auth } from "@/auth"
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import LoginButton from "@/components/auth/login-button";
+
+import { auth } from "@/auth";
 
 export default async function Home() {
-  const session = await auth()
+  const session = await auth();
 
-  const userRole = session?.user?.role
-  let dashBoardUrl = ""
+  const userRole = session?.user?.role;
+  let dashBoardUrl = "";
 
   if (userRole === "ADMIN") {
-    dashBoardUrl = "/admin"
+    dashBoardUrl = "/admin";
   } else if (userRole === "DOCTOR") {
-    dashBoardUrl = "/doctor"
+    dashBoardUrl = "/doctor";
   } else if (userRole === "PATIENT") {
-    dashBoardUrl = "/patient"
+    dashBoardUrl = "/patient";
   }
 
   return (
-    <div className='p-2 px-4'>
-      <nav className='border-b-2 border-gray-300'>
-        <div className='flex justify-between'>
-          <Image
-            src='/MediEaseLogo.png'
-            alt='MediEase Logo'
-            className='my-2'
-            width={200}
-            height={100}
-          />
-          <div className='flex flex-col justify-end items-start'>
-            {session ? (
-              <Link href={dashBoardUrl}>
-                <Button
-                  className='hover:bg-lime-700 hover:text-white'
-                  size='sm'
-                  variant='outline'
-                >
-                  Dashboard
-                </Button>
-              </Link>
-            ) : (
-              <LoginButton>
-                <Button
-                  className='hover:bg-indigo-700 hover:text-white'
-                  size='sm'
-                  variant='outline'
-                >
-                  Login
-                </Button>
-              </LoginButton>
-            )}
+    <div
+      className="h-full flex items-start justify-center -z-40 bg-cover bg-center min-h-screen bg-no-repeat"
+      style={{ backgroundImage: `url('/LandingPagePic.jpg')` }}
+    >
+      <div className="p-2 px-4 mt-4">
+        <nav className="border-b-2  border-gray-300 px-2 rounded-md">
+          <div className="flex justify-between  pt-0">
+            <Image
+              src="/MediEase.jpg"
+              alt="MediEase Logo"
+              width={200}
+              height={60}
+            />
+            <div className="flex gap-3 justify-end items-start">
+              <Button
+                className="hover:bg-rose-700 hover:border-rose-500 hover:text-white"
+                size="sm"
+                variant="outline"
+              >
+                <Link href="#about-section">About</Link>
+              </Button>
+
+              {session ? (
+                <Link href={dashBoardUrl}>
+                  <Button
+                    className="hover:bg-lime-700  hover:border-lime-500 hover:text-white"
+                    size="sm"
+                    variant="outline"
+                  >
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <LoginButton>
+                  <Button
+                    className="hover:bg-indigo-700  hover:border-indigo-500 hover:text-white"
+                    size="sm"
+                    variant="outline"
+                  >
+                    Login
+                  </Button>
+                </LoginButton>
+              )}
+            </div>
           </div>
-        </div>
-        <h1 className='text-left text-xs mb-1 pl-10'>
-          Your Health, Our Priority
-        </h1>
-      </nav>
-      <h1 className='text-center text-2xl font-semibold pt-4'>
-        Welcome to IUT Medical Centre
-      </h1>
-      <div className='px-10 flex gap-6 justify-center items-center mb-6 md:px-12'>
-        <Image
-          src='/IUT.jpg'
-          alt='Hero Image'
-          className='px-1 mt-4'
-          height={300}
-          width={600}
-        />
-        <Image
-          src='/medical_centre.jpg'
-          alt='Hospital Logo'
-          className='mt-4'
-          height={300}
-          width={600}
-        />
-      </div>
-      <div>
-        <h1 className='text-left text-3xl mb-4 px-4'>
-          University Medical Centre
-        </h1>
-        <p className='px-4 mb-6'>
-          IUT has a Medical Center at the North- West corner of the campus. It
-          has five well equipped observation beds, Mini operation Room, Medicine
-          store, waiting area, and a pathological laboratory currently launched.
-          It provides normal Medicare to the students, faculties, staff, and the
-          family members. Necessary medicines are also available in the store.
-          There are three doctors, two nurses doing the duties round the clock
-          24/7. In case of emergency, the doctor on duty can be contacted on the
-          Medical Centre Hotline: +88 01844 056056.
-        </p>
+          <h1 className="text-white text-left pt-1 text-xs pl-10 ">
+            Your Health, Our Priority
+          </h1>
+        </nav>
+        <h3 className="text-center text-white text-6xl font-semibold mt-60">
+          Welcome to IUT Medical Centre
+        </h3>
+
+        <section id="about-section" className="grid grid-cols-2 mb-40">
+          <div className="mt-[20rem]">
+            <h1 className="text-left text-3xl mb-4 px-4 text-blue-500 ">
+              University Medical Centre
+            </h1>
+
+            <p className="px-4 mb-6">
+              IUT has a Medical Center at the North- West corner of the campus.
+              It has five well equipped observation beds, Mini operation Room,
+              Medicine store, waiting area, and a pathological laboratory
+              currently launched. It provides normal Medicare to the students,
+              faculties, staff, and the family members. Necessary medicines are
+              also available in the store. There are three doctors, two nurses
+              doing the duties round the clock 24/7. In case of emergency, the
+              doctor on duty can be contacted on the Medical Centre Hotline: +88
+              01844 056056.
+            </p>
+          </div>
+          <div className="grid justify-center items-end mt-[24rem] ">
+            <Image
+              className=""
+              src="/medical_centre.jpg"
+              alt="Medical Centre Image"
+              width={400}
+              height={200}
+            />
+          </div>
+        </section>
       </div>
     </div>
-  )
+  );
 }
