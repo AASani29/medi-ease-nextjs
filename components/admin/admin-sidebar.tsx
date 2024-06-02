@@ -44,7 +44,7 @@ const sidebarItems = [
 		icon: RiTestTubeFill,
 	},
 	{
-		name: "Reimburstments",
+		name: "Reimbursements",
 		href: "/admin/reimburstments",
 		icon: RiMoneyDollarCircleFill,
 	},
