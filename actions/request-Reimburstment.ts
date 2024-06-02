@@ -5,11 +5,6 @@ import { db } from "@/lib/db";
 import { reimbursementRequestSchema } from "@/schemas";
 import { getReimburstmentByAppointmentId } from "@/data/reimburstment";
 
-const getFileName = (filePath: any) => {
-	const parts = filePath.split("\\");
-	return parts[parts.length - 1];
-};
-
 export const requestReimburstment = async (
 	values: z.infer<typeof reimbursementRequestSchema>,
 ) => {
@@ -38,22 +33,24 @@ export const requestReimburstment = async (
 	}
 
 	const numberAmount = Number.parseFloat(amount);
-	const billFileName = `${appointmentId}-${getFileName(billImgUrl)}`;
-	const refFileName = `${appointmentId}-${getFileName(referralImgUrl)}`;
-	const presFileName = `${appointmentId}-${getFileName(prescriptionImgUrl)}`;
+	const billFileName = `bill-${appointmentId}`;
+	const refFileName = `reff-${appointmentId}`;
+	const presFileName = `pres-${appointmentId}`;
 
-	await db.reimbursementRequest.create({
-		data: {
-			patientId,
-			appointmentId,
-			amount: numberAmount,
-			billImgUrl: billFileName,
-			referralImgUrl: refFileName,
-			prescriptionImgUrl: presFileName,
-			status,
-			submittedAt,
-		},
-	});
+	console.log(billFileName, refFileName, presFileName);
+
+	// await db.reimbursementRequest.create({
+	// 	data: {
+	// 		patientId,
+	// 		appointmentId,
+	// 		amount: numberAmount,
+	// 		billImgUrl: billFileName,
+	// 		referralImgUrl: refFileName,
+	// 		prescriptionImgUrl: presFileName,
+	// 		status,
+	// 		submittedAt,
+	// 	},
+	// });
 
 	return { Success: "Successfully requested for Reimburstment" };
 };

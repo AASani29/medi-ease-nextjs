@@ -15,6 +15,25 @@ export const getPatientById = async (patientId: any) => {
 	}
 };
 
+export const getPatientNameById = async (patientId: any) => {
+	try {
+		const patient = await db.patient.findUnique({
+			where: { id: patientId },
+			select: {
+				user: {
+					select: {
+						name: true,
+					},
+				},
+			},
+		});
+
+		return patient?.user.name;
+	} catch {
+		return null;
+	}
+};
+
 export const getPatientByUserId = async (userId: any) => {
 	try {
 		const patient = await db.patient.findUnique({

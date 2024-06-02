@@ -1,5 +1,20 @@
 import { db } from "@/lib/db";
 
+export const getAllReimburstments = async () => {
+	try {
+		const reimburstments = await db.reimbursementRequest.findMany({
+			include: {
+				Appointment: true,
+				Patient: true,
+			},
+		});
+
+		return reimburstments;
+	} catch {
+		return null;
+	}
+};
+
 export const getReimburstmentById = async (reimburstmentId: any) => {
 	try {
 		const reimburstment = await db.reimbursementRequest.findFirst({

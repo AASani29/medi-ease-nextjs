@@ -35,6 +35,27 @@ export const getDoctorByUserId = async (userId: any) => {
 	}
 };
 
+export const getDoctorNameById = async (doctorId: any) => {
+	try {
+		const doctor = await db.doctor.findFirst({
+			where: {
+				id: doctorId,
+			},
+			select: {
+				user: {
+					select: {
+						name: true,
+					},
+				},
+			},
+		});
+
+		return doctor?.user.name;
+	} catch {
+		return null;
+	}
+};
+
 export const getDoctorById = async (doctorId: any) => {
 	try {
 		const doctor = await db.doctor.findFirst({
