@@ -62,7 +62,9 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
 						</Link>
 					</Button>
 					{appointment.status === "PENDING" ? (
-						<p className="text-sm text-red-600">No prescription</p>
+						<p className="text-sm text-rose-600 border-2 px-2 py-1 rounded-md border-rose-600">
+							No prescription
+						</p>
 					) : (
 						<Link href={`/patient/prescription/${prescription?.id}`}>
 							<Button
@@ -78,7 +80,7 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
 			</CardContent>
 			<CardFooter>
 				<p className="text-sm text-gray-600">
-					Status : {` `}
+					Status :{" "}
 					<span
 						className={`${
 							appointment.status === "PENDING"

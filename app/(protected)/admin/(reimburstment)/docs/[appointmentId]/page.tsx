@@ -18,7 +18,6 @@ const AppointmentDocsPage = async ({ params }: any) => {
 	const { appointmentId } = params;
 
 	const appointment = await getAppointmentById(appointmentId);
-	console.log(appointment);
 
 	return (
 		<div className="space-y-8">
