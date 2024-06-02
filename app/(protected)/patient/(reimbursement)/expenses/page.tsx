@@ -14,10 +14,8 @@ const Expenses = async () => {
 		patient?.id,
 	);
 
-	console.log(reimbursementRequests);
-
 	return (
-		<div>
+		<div className="py-6 px-8 space-y-6">
 			{reimbursementRequests?.map((reimbursementRequest) => {
 				return (
 					<ExpenseCard

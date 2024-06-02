@@ -12,7 +12,7 @@ export const LoginSchema = z.object({
 export const RegisterSchema = z.object({
 	name: z.string().min(1, { message: "Name is required" }),
 	email: z.string().email({ message: "Email is required" }),
-	password: z.string().min(4, { message: "Minimum 4 characters required" }),
+	password: z.string().min(6, { message: "Minimum 6 characters required" }),
 	role: z.enum(["PATIENT", "DOCTOR", "ADMIN", "null"]),
 	patientType: z.enum(["STUDENT", "FACULTY", "STAFF", "null"]),
 	specialization: z.string().optional().nullish(),
@@ -135,4 +135,15 @@ export const DoctorAvailabilitySchema = z.object({
 	weekday: z.string().min(1, { message: "Weekday is required" }),
 	startTime: z.date(),
 	endTime: z.date(),
+});
+
+export const reimbursementRequestSchema = z.object({
+	patientId: z.string(),
+	appointmentId: z.string(),
+	amount: z.string(),
+	billImgUrl: z.string(),
+	referralImgUrl: z.string().nullable().optional(),
+	prescriptionImgUrl: z.string().nullable().optional(),
+	status: z.string().default("PENDING"),
+	submittedAt: z.date().default(new Date()),
 });
