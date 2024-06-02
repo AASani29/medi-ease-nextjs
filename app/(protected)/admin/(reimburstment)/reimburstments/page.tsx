@@ -64,7 +64,7 @@ const ReimburstmentPage = async () => {
 										variant="outline"
 										className="hover:bg-rose-700 hover:text-white"
 									>
-										<Link href={`/admin/docs/${reimburstment.id}`}>
+										<Link href={`/admin/docs/${reimburstment.appointmentId}`}>
 											View Docs
 										</Link>
 									</Button>
