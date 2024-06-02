@@ -72,15 +72,15 @@ const AdminSidebar: React.FC = () => {
 					isCollapsed ? "w-20" : "w-64"
 				}`}
 			>
-				<div className="flex items-center gap-4 pb-4 mb-4 border-b border-gray-300">
+				<div className="flex items-center justify-center gap-1 pb-2 mb-6 border-b border-gray-300">
 					<Image
-						width={80}
-						height={80}
-						className="w-14 h-14 object-contain rounded-xl"
-						src="/MedieaseLogo.png"
-						alt="MediEase Logo"
+						width={100}
+						height={100}
+						className="w-8 h-8 object-contain"
+						src="/heartIcon.png"
+						alt="Heart Icon"
 					/>
-					<p className={`text-2xl ${isCollapsed ? "hidden" : "block"}`}>
+					<p className={`text-2xl mt-2 ${isCollapsed ? "hidden" : "block"}`}>
 						Medi<span className="text-cyan-400"> ADMIN</span>
 					</p>
 				</div>

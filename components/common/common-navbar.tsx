@@ -22,7 +22,7 @@ const Navbar = async () => {
 		<nav className="flex justify-between px-5 py-2 items-center shadow-md bg-white border-b-2">
 			<Link href="/">
 				<Image
-					src="/navbarLogo.png"
+					src="/navbarLogo.jpg"
 					alt="MediEase Logo"
 					width={140}
 					height={100}
