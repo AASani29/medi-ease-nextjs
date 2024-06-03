@@ -82,13 +82,17 @@ const AppointmentPage = async ({ params }: any) => {
 							<p className="text-sm text-gray-600">
 								Status :{" "}
 								<span
-									className={`${
-										appointment.status === "PENDING"
-											? "text-red-500"
-											: "text-green-700"
-									} font-semibold`}
+									className={`font-semibold ${
+										appointment?.status === "PENDING"
+											? "text-yellow-600"
+											: appointment?.status === "CANCELLED"
+												? "text-rose-500"
+												: appointment?.status === "PRESCRIBED"
+													? "text-lime-700"
+													: ""
+									}`}
 								>
-									{appointment.status}
+									{appointment?.status}
 								</span>
 							</p>
 						</div>
@@ -117,7 +121,7 @@ const AppointmentPage = async ({ params }: any) => {
 									disabled
 									size="sm"
 									variant="outline"
-									className="bg-yellow-300 text-white border-gray-400"
+									className="bg-yellow-600 text-white border-yellow-200"
 								>
 									Reimbursement Requested
 								</Button>
@@ -126,7 +130,7 @@ const AppointmentPage = async ({ params }: any) => {
 									disabled
 									size="sm"
 									variant="outline"
-									className="bg-lime-400 text-white border-gray-400"
+									className="bg-lime-700 text-white border-lime-300"
 								>
 									Reimbursement Accepted
 								</Button>
@@ -135,21 +139,21 @@ const AppointmentPage = async ({ params }: any) => {
 									disabled
 									size="sm"
 									variant="outline"
-									className="bg-rose-400 text-white border-gray-400"
+									className="bg-rose-400 text-white border-rose-400"
 								>
 									Reimbursement Rejected
 								</Button>
-							) : (
+							) : appointment?.status === "PRESCRIBED" ? (
 								<Button
 									size="sm"
 									variant="outline"
-									className="hover:bg-rose-700 hover:text-white border-gray-400"
+									className="hover:bg-teal-700 hover:text-white border-teal-200"
 								>
 									<Link href={`/patient/reimbursement/${appointmentId}`}>
 										Get Reimbursement &rarr;
 									</Link>
 								</Button>
-							)}
+							) : null}
 						</div>
 					</CardFooter>
 				</Card>

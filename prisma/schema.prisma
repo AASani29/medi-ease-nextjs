@@ -100,8 +100,6 @@ model Appointment {
   status               String                 @default("PENDING")
   Prescription         Prescription[]
   ReimbursementRequest ReimbursementRequest[]
-
-  @@unique([doctorId, time, weekday])
 }
 
 model StudentInfo {

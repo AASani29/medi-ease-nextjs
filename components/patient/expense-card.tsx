@@ -93,13 +93,17 @@ const ExpenseCard: React.FC<{ reimbursementRequest: ReimbursementRequest }> =
 						</span>
 					</div>
 					<p className="text-sm text-gray-600">
-						Status: &nbsp;
+						<strong>Status: &nbsp;</strong>
 						<span
-							className={`${
+							className={`font-semibold ${
 								reimbursementRequest.status === "PENDING"
-									? "text-red-500"
-									: "text-green-700"
-							} font-semibold`}
+									? "text-yellow-600"
+									: reimbursementRequest.status === "REJECTED"
+										? "text-rose-600"
+										: reimbursementRequest.status === "ACCEPTED"
+											? "text-lime-700"
+											: ""
+							}`}
 						>
 							{reimbursementRequest.status}
 						</span>

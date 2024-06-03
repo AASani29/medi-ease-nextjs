@@ -102,6 +102,7 @@ export const getAppointmentByTime = async (time: any) => {
 		const appointment = await db.appointment.findFirst({
 			where: {
 				time,
+				status: "PENDING",
 			},
 		});
 

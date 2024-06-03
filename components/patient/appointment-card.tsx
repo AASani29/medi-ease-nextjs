@@ -13,6 +13,7 @@ import { FaCalendarWeek } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { getUserById } from "@/data/user";
 import { getPrescriptionByAppointmentId } from "@/data/prescription";
+import { CancelAppointment } from "@/actions/appointment-actions";
 
 const AppointmentCard: React.FC<{ appointment: any }> = async ({
 	appointment,
@@ -62,10 +63,35 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
 						</Link>
 					</Button>
 					{appointment.status === "PENDING" ? (
-						<p className="text-sm text-rose-600 border-2 px-2 py-1 rounded-md border-rose-600">
-							No prescription
-						</p>
-					) : (
+						<div className="flex items-center gap-4">
+							<form
+								className="px-4"
+								action={async () => {
+									"use server";
+
+									await CancelAppointment(appointment?.id);
+								}}
+							>
+								<Button
+									type="submit"
+									variant="outline"
+									size="sm"
+									className="hover:bg-rose-700 hover:text-white border-gray-400"
+								>
+									Cancel Appointment &#x2715;
+								</Button>
+							</form>
+							<p className="text-sm text-rose-600 border-2 px-2 py-1 rounded-md border-rose-600">
+								No prescription
+							</p>
+						</div>
+					) : appointment.status === "CANCELLED" ? (
+						<div className="flex items-center gap-4">
+							<p className="text-sm text-rose-600 border-2 px-2 py-1 rounded-md border-rose-600">
+								Appointment Cancelled
+							</p>
+						</div>
+					) : appointment.status === "PRESCRIBED" ? (
 						<Link href={`/patient/prescription/${prescription?.id}`}>
 							<Button
 								size="sm"
@@ -75,18 +101,22 @@ const AppointmentCard: React.FC<{ appointment: any }> = async ({
 								View Prescription &rarr;
 							</Button>
 						</Link>
-					)}
+					) : null}
 				</div>
 			</CardContent>
 			<CardFooter>
 				<p className="text-sm text-gray-600">
 					Status :{" "}
 					<span
-						className={`${
+						className={`font-semibold ${
 							appointment.status === "PENDING"
-								? "text-red-500"
-								: "text-green-700"
-						} font-semibold`}
+								? "text-yellow-600"
+								: appointment.status === "CANCELLED"
+									? "text-rose-600"
+									: appointment.status === "PRESCRIBED"
+										? "text-lime-700"
+										: ""
+						}`}
 					>
 						{appointment.status}
 					</span>
