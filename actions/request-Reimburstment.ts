@@ -39,18 +39,18 @@ export const requestReimburstment = async (
 
 	console.log(billFileName, refFileName, presFileName);
 
-	// await db.reimbursementRequest.create({
-	// 	data: {
-	// 		patientId,
-	// 		appointmentId,
-	// 		amount: numberAmount,
-	// 		billImgUrl: billFileName,
-	// 		referralImgUrl: refFileName,
-	// 		prescriptionImgUrl: presFileName,
-	// 		status,
-	// 		submittedAt,
-	// 	},
-	// });
+	await db.reimbursementRequest.create({
+		data: {
+			patientId,
+			appointmentId,
+			amount: numberAmount,
+			billImgUrl: billFileName,
+			referralImgUrl: refFileName,
+			prescriptionImgUrl: presFileName,
+			status,
+			submittedAt,
+		},
+	});
 
 	return { Success: "Successfully requested for Reimburstment" };
 };

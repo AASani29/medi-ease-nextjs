@@ -18,12 +18,14 @@ import { getDoctorNameById } from "@/data/doctor";
 const ReimburstmentPage = async () => {
 	const reimburstments = await getAllReimburstments();
 
+	console.log(reimburstments);
+
 	return (
 		<div>
 			<Navbar />
 			<div className="p-6 space-y-3">
 				<Table>
-					<TableCaption>Doctors list for IUT Medical Centre</TableCaption>
+					<TableCaption>Reimbursement list for IUT Medical Centre</TableCaption>
 					<TableHeader>
 						<TableRow>
 							<TableHead>Appointment ID</TableHead>
