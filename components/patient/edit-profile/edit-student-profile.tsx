@@ -137,7 +137,6 @@ const EditStudentProfile = ({ user, patient, info }: any) => {
 												<SelectContent>
 													<SelectItem value="Male">Male</SelectItem>
 													<SelectItem value="Female">Female</SelectItem>
-													<SelectItem value="NON-Binary">Non-Binary</SelectItem>
 												</SelectContent>
 											</Select>
 										</FormItem>
